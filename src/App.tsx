@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import './app.css';
+import './App.css';
 import HeaderApp from './components/header';
 import RutasApp from './components/rutas';
 import { useData } from './hooks/useData';
