@@ -3,7 +3,7 @@ const producction:boolean = false;
 export const secretKey = '123456789';
 
 export const API_URL = {
-    Base: 'https://rentcarapi.somee.com/',
+    Base: 'https://rentcarapi.somee.com',
     //Base: 'https://localhost:44391',
     //Base: 'https://localhost/diversos.api',
 
