@@ -104,9 +104,7 @@ const AlquilerRegistroPage = () => {
     }
 
     useEffect(() => {
-        if (nuevo) {
-            nuevo();
-        }
+        nuevo && nuevo();
         cargar();
     }, [])
 

@@ -105,7 +105,7 @@ const VehiculoPage = () => {
 
                 <hr className="mt-3 mb-4 pb-1" />
 
-                <Form id="formvehiculo" noValidate validated={validated} onSubmit={guardar} onInvalid={(e) => console.log(e)}>
+                <Form id="formvehiculo" noValidate validated={validated} onSubmit={guardar}>
                     <Tab.Container id="left-tabs-example" defaultActiveKey="generales">
                         <Nav fill variant="tabs">
                             <Nav.Item>

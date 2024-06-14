@@ -11,6 +11,7 @@ import PropietarioPerfilPage from "../pages/propietarios/perfil"
 import AlquilerRegistroPage from "../pages/alquiler/registro"
 import AlquileresListaPage from "../pages/alquiler/lista"
 import VehiculosDisponblesPage from "../pages/vehiculos/disponibles"
+import MensajesPage from "../pages/mensajes/page"
 
 export const rutas = {
     Home: '/',
@@ -35,15 +36,16 @@ export const rutas = {
         PorPropietario: 'alquileres/propietario/:codigo',
     },
     Contacto: 'contacto',
+    Mensajes: 'mensajes',
 }
 
-const RutasApp =() => {
+const RutasApp = () => {
     return (
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path={`/${rutas.Login}`} element={<LoginPage />} />
             <Route path={`/${rutas.Usuarios}`} element={<UsuariosPage />} />
-            
+
             {/* Propietarios */}
             <Route path={`/${rutas.Propietarios.Registro}`} element={<RegistroPropietarioPage />} />
             <Route path={`/${rutas.Propietarios.Perfil}`} element={<PropietarioPerfilPage />} />
@@ -57,6 +59,11 @@ const RutasApp =() => {
             {/* Alquileres */}
             <Route path={`/${rutas.Alquileres.Registro}`} element={<AlquilerRegistroPage />} />
             <Route path={`/${rutas.Alquileres.PorPropietario}`} element={<AlquileresListaPage />} />
+
+            {/* Mensajes */}
+            <Route path={`/${rutas.Mensajes}`} element={<MensajesPage />} />
+
+            {/* Otros */}
             <Route path={`/${rutas.Contacto}`} element={<ContactoPage />} />
             <Route path="*" element={<PageNotFound />} />
         </Routes>

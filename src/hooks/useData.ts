@@ -44,6 +44,8 @@ import ConfiguracionAlquilerNotasProvider, { ConfiguracionAlquilerNotasContext }
 import { ConfiguracionAlquilerNota } from "../interfaces/entidades/configuracionAlquilerNota";
 import AlquilersProvider, { AlquilerContextState, AlquileresContext } from "../contexts/alquileres";
 import { Alquiler } from "../interfaces/entidades/alquiler";
+import MensajesProvider, { MensajesContext } from "../contexts/mensajes";
+import { Mensaje } from "../interfaces/entidades/mensaje";
 
 export const ProvidersTree = Providers([
     /* Login */
@@ -73,6 +75,7 @@ export const ProvidersTree = Providers([
     [PersonasProvider, {}],
     [VehiculosProvider, {}],
     [AlquilersProvider, {}],
+    [MensajesProvider, {}],
 ]);
 
 export const useData = () => {
@@ -103,6 +106,7 @@ export const useData = () => {
     const contextPersonas = useContext(PersonasContext) as UsuarioContextState<Persona>;
     const contextVehiculos = useContext(VehiculosContext) as VehiculoContextState<Vehiculo>;
     const contextAlquileres = useContext(AlquileresContext) as AlquilerContextState<Alquiler>;
+    const contextMensajes = useContext(MensajesContext) as AlquilerContextState<Mensaje>;
 
     return {
         /* Login */
@@ -132,6 +136,7 @@ export const useData = () => {
         contextPersonas,
         contextVehiculos,
         contextAlquileres,
+        contextMensajes,
     }
 
 }

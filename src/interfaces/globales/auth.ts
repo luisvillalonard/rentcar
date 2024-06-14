@@ -4,6 +4,7 @@ import { Rol } from "../entidades/rol";
 export interface Login {
     usuario: string | null,
     clave: string | null,
+    recuerdame: boolean
 }
 
 export interface User {

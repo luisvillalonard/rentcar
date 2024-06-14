@@ -5,7 +5,8 @@ body {
   font-weight: 100;
   font-size: 0.9rem;
   color: rgb(31, 31, 31);
-  background-color: #f1f1f1; /* rgb(230, 235, 243); */
+  background-color: #fafafa;
+  /* rgb(230, 235, 243); */
 }
 
 .home-wrap {
@@ -32,7 +33,7 @@ body {
   overflow: hidden;
   justify-content: center;
   align-items: center;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .loading-body {
@@ -49,7 +50,47 @@ body {
 /* Chrome, Safari, Edge, Opera */
 .input-not-spin::-webkit-outer-spin-button,
 .input-not-spin::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: textfield !important;
-    margin: 0;
+  -webkit-appearance: none;
+  -moz-appearance: textfield !important;
+  margin: 0;
+}
+
+.bg-opacity-25 {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.placeholder-white::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: #fff;
+  opacity: 1;
+}
+
+.placeholder-white:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #fff;
+  opacity: 1;
+}
+
+.placeholder-white::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #fff;
+  opacity: 1;
+}
+
+.placeholder-white:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #fff;
+  opacity: 1;
+}
+
+.placeholder-white::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #fff;
+  opacity: 1;
+}
+
+.placeholder-white::placeholder {
+  /* Most modern browsers support this now. */
+  color: #fff;
+  opacity: 1;
 }

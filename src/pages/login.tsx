@@ -1,4 +1,4 @@
-import { Button, Form, Row, Col, Container } from "react-bootstrap";
+import { Button, Form, Row, Col, Container, Card } from "react-bootstrap";
 import { useData } from "../hooks/useData";
 import { Login } from "../interfaces/globales/auth";
 import { useForm } from "../hooks/useForm";
@@ -6,18 +6,29 @@ import { Alerta } from "../hooks/useMensaje";
 import { useNavigate } from "react-router";
 import Loading from "../components/loading";
 import { rutas } from "../components/rutas";
+import { ChangeEvent, useState } from "react";
 
 const LoginPage = () => {
 
     const { contextAuth: { state: { procesando }, validar } } = useData();
-    const { entidad, handleChangeInput } = useForm<Login>({ usuario: '', clave: '' });
+    const { entidad, handleChangeInput } = useForm<Login>({ usuario: '', clave: '', recuerdame: false });
+    const [validated, setValidated] = useState<boolean>(false);
     const nav = useNavigate();
 
-    const ValidarUsuario = async () => {
-        const resp = await validar(entidad);
-        if (!resp)
+    const validarUsuario = async (evt: ChangeEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+        evt.stopPropagation();
+
+        const form = evt.currentTarget;
+        const valido = form.checkValidity();
+        if (!valido) {
+            setValidated(true);
             return;
-        
+        } else if (!entidad) {
+            return;
+        }
+
+        const resp = await validar(entidad);
         if (!resp.ok) {
             Alerta(resp.mensaje || 'Situación inesperada tratando de validar el nombre del usuario.')
             return;
@@ -27,38 +38,57 @@ const LoginPage = () => {
 
     return (
         <div className="home-wrap">
-            <div className="w-100 h-100 position-absolute d-flex overflow-hidden bg-black bg-opacity-25">
+            <div className="w-100 h-100 position-absolute d-flex overflow-hidden bg-black bg-opacity-50">
                 <Container as={Col} lg={4} md={5} xs={9} className="m-auto text-white">
-                    <Row>
-                        <Col xs={12} className="mb-4">
-                            <Form.Label className="fs-5 mb-1">Usuario</Form.Label>
-                            <Form.Control
-                                id="ctUsuario"
-                                type="text"
-                                name="usuario"
-                                autoComplete="off"
-                                size="lg"
-                                placeholder="escriba aqui su usuario"
-                                className="border-primary p-3"
-                                value={entidad.usuario || ''}
-                                onChange={handleChangeInput} />
-                        </Col>
-                        <Col xs={12} className="mb-5">
-                            <Form.Label className="fs-5 mb-1">Contrase&ntilde;a</Form.Label>
-                            <Form.Control
-                                type="password"
-                                name="clave"
-                                autoComplete="off"
-                                size="lg"
-                                placeholder="escriba aqui su contraseña"
-                                className="border-primary p-3"
-                                value={entidad.clave || ''}
-                                onChange={handleChangeInput} />
-                        </Col>
-                        <Col xs={12} className="mb-3 align-self-end">
-                            <Button variant="primary" size="lg" className="w-100" onClick={ValidarUsuario}>Aceptar</Button>
-                        </Col>
-                    </Row>
+                    <h1 className="text-center fs-2 fw-bolder mb-4">Log&iacute;n</h1>
+                    <Form id="formvehiculo" noValidate validated={validated} onSubmit={validarUsuario}>
+                        <Row>
+                            <Col xs={12} className="mb-4">
+                                <Form.Control
+                                    id="ctUsuario"
+                                    type="text"
+                                    name="usuario"
+                                    autoComplete="off"
+                                    placeholder="escriba aqui su cédula sin guiones"
+                                    className="rounded-pill border-white bg-opacity-25 text-center text-white py-2 px-3 mb-2 placeholder-white"
+                                    required
+                                    value={entidad.usuario || ''}
+                                    onChange={handleChangeInput}
+                                    onFocus={(e) => e.target.select()} />
+                            </Col>
+                            <Col xs={12} className="mb-4">
+                                <Form.Control
+                                    type="password"
+                                    name="clave"
+                                    autoComplete="off"
+                                    placeholder="escriba aqui su contraseña"
+                                    className="rounded-pill border-white bg-opacity-25 text-center text-white py-2 px-3 mb-2 placeholder-white"
+                                    required
+                                    value={entidad.clave || ''}
+                                    onChange={handleChangeInput}
+                                    onFocus={(e) => e.target.select()} />
+                            </Col>
+                            <Col xs={12} className="mb-4 align-self-end">
+                                <Button type="submit" variant="primary" className="w-100 rounded-pill">Aceptar</Button>
+                            </Col>
+                            <Col xs={12} className="mb-3 align-self-center">
+                                <Row>
+                                    <Col xs={6}>
+                                        <Form.Check
+                                            id="recuerdame"
+                                            name="recuerdame"
+                                            type="switch"
+                                            label="Recuerdame"
+                                            className="text-white"
+                                            required={false}
+                                            formNoValidate={false}
+                                            checked={entidad?.recuerdame}
+                                            onChange={handleChangeInput} />
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                    </Form>
                 </Container>
                 <Loading Visible={procesando} Mensaje="Validando, espere..." />
             </div>

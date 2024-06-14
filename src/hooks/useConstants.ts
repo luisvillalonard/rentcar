@@ -1,11 +1,10 @@
-const producction:boolean = false;
+const isLocalhost:boolean = true;
 
 export const secretKey = '123456789';
 
 export const API_URL = {
-    Base: 'https://rentcarapi.somee.com',
-    //Base: 'https://localhost:44391',
-    //Base: 'https://localhost/diversos.api',
+    Base: isLocalhost ? 'https://localhost:44391' : 'https://rentcarapi.somee.com',
+    //Base: 'https://rentcarapi.somee.com',
 
     ApiDefaultProps:  {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
