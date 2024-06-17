@@ -16,7 +16,7 @@ const HeaderApp = () => {
         if (!url) {
             return;
         }
-        nav(url);
+        nav(url, { replace: true });
     }
 
     useEffect(() => {
@@ -53,6 +53,7 @@ const HeaderApp = () => {
                                         <Nav.Link onClick={() => navUrl(`/${rutas.Propietarios.Perfil.replace(':codigo', user?.propietario?.codigo || '')}`)} className="fs-6 text-white align-self-center">Mi Perf&iacute;l</Nav.Link>
                                         <Nav.Link onClick={() => navUrl(`/${rutas.Mensajes}`)} className="fs-6 text-white align-self-center">Mensajes</Nav.Link>
                                         <Nav.Link onClick={() => navUrl(`/${rutas.Contacto}`)} className="fs-6 text-white">Contacto</Nav.Link>
+                                        <Nav.Link onClick={() => navUrl(`/${rutas.Usuarios.CambioClave}`)} className="fs-6 text-white">Cambiar Clave</Nav.Link>
                                         <Nav.Link className="fs-6 text-white align-self-center" onClick={async () => {
                                             await Confirmacion('Esta seguro(a) que desea cerrar la sesión?')
                                                 .then((resp) => {
@@ -60,7 +61,6 @@ const HeaderApp = () => {
                                                         LoggedOut();
                                                         getUser();
                                                         navUrl(`${rutas.Home}`);
-                                                        window.location.reload();
                                                     }
                                                 })
                                         }}>

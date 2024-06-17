@@ -14,9 +14,10 @@ import { useForm } from "../../hooks/useForm";
 import { Propietario } from "../../interfaces/entidades/propietario";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Provincia } from "../../interfaces/entidades/provincia";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Alerta, Exito } from "../../hooks/useMensaje";
 import Loading from "../../components/loading";
+import { rutas } from "../../components/rutas";
 
 const RegistroPropietarioPage = () => {
     const {
@@ -26,7 +27,8 @@ const RegistroPropietarioPage = () => {
     } = useData();
     const { entidad, editar, handleChangeInput } = useForm<Propietario | null | undefined>(modelo);
     const [validated, setValidated] = useState<boolean>(false);
-    const url = useLocation()
+    const url = useLocation();
+    const nav = useNavigate();
 
     useEffect(() => {
         nuevo && nuevo();
@@ -60,9 +62,10 @@ const RegistroPropietarioPage = () => {
 
         const resp = await agregar(entidad);
         if (!resp.ok) {
-            Alerta(resp.mensaje || 'Situación inesperada tratando de guardar los datos del propietario.')
+            Alerta(resp.mensaje || 'Situación inesperada tratando de guardar los datos del propietario.');
         } else {
-            Exito('Sus datos fueron registrados correctamente. Le fue enviado un correo electronico con una clave temporal para su ingreso al sistema.')
+            Exito('Sus datos fueron registrados correctamente. Le fue enviado un correo electronico con una clave temporal para su ingreso al sistema.');
+            nav(rutas.Home);
         }
     }
 

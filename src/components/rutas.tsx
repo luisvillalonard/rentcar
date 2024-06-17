@@ -12,11 +12,12 @@ import AlquilerRegistroPage from "../pages/alquiler/registro"
 import AlquileresListaPage from "../pages/alquiler/lista"
 import VehiculosDisponblesPage from "../pages/vehiculos/disponibles"
 import MensajesPage from "../pages/mensajes/page"
+import ConfirmacionRegistroPage from "../pages/usuarios/confirmacion"
+import CambioClavePage from "../pages/usuarios/cambio"
 
 export const rutas = {
     Home: '/',
     Login: 'login',
-    Usuarios: 'usuarios',
     Propietarios: {
         Todos: 'propietarios',
         Registro: 'propietarios/registro',
@@ -37,6 +38,11 @@ export const rutas = {
     },
     Contacto: 'contacto',
     Mensajes: 'mensajes',
+    Usuarios: {
+        Todos: 'usuarios',
+        RegistroConfirmacion: 'usuarios/confirmacion/:codigo',
+        CambioClave: 'usuarios/cambioclave'
+    }
 }
 
 const RutasApp = () => {
@@ -44,7 +50,6 @@ const RutasApp = () => {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path={`/${rutas.Login}`} element={<LoginPage />} />
-            <Route path={`/${rutas.Usuarios}`} element={<UsuariosPage />} />
 
             {/* Propietarios */}
             <Route path={`/${rutas.Propietarios.Registro}`} element={<RegistroPropietarioPage />} />
@@ -62,6 +67,11 @@ const RutasApp = () => {
 
             {/* Mensajes */}
             <Route path={`/${rutas.Mensajes}`} element={<MensajesPage />} />
+
+            {/* Usuarios */}
+            <Route path={`/${rutas.Usuarios.Todos}`} element={<UsuariosPage />} />
+            <Route path={`/${rutas.Usuarios.RegistroConfirmacion}`} element={<ConfirmacionRegistroPage />} />
+            <Route path={`/${rutas.Usuarios.CambioClave}`} element={<CambioClavePage />} />
 
             {/* Otros */}
             <Route path={`/${rutas.Contacto}`} element={<ContactoPage />} />

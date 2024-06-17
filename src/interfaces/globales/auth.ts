@@ -9,6 +9,7 @@ export interface Login {
 
 export interface User {
     id: number,
+    codigo: string | null,
     acceso: string | null,
     rol: Rol | null,
     propietario: Propietario | null,

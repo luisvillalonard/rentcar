@@ -111,11 +111,7 @@ const HomePage = () => {
                                 sacale el máximo provecho a nuestra plataforma.
                             </Col>
                             <Col>
-                                {
-                                    user?.propietario
-                                        ? <Button variant="success" className="rounded-pill" onClick={() => nav(`/${rutas.Propietarios.Perfil.replace(':codigo', user?.propietario?.codigo || '')}`)}>Actualizame</Button>
-                                        : <Button variant="success" className="rounded-pill" onClick={() => nav(`/${rutas.Propietarios.Registro}`)}>Registrame</Button>
-                                }
+                                <Button variant="success" className="rounded-pill" onClick={() => nav(`/${rutas.Propietarios.Registro}`)}>Registrame</Button>
                             </Col>
                         </Row>
                     </Col>
@@ -133,11 +129,7 @@ const HomePage = () => {
                                 lo que los dem&aacute;s estan buscando. No pierdas m&aacute;s tiempo!.
                             </Col>
                             <Col>
-                                {
-                                    user?.propietario
-                                        ? <Button variant="success" className="rounded-pill" onClick={() => nav(`/${rutas.Propietarios.Perfil.replace(':codigo', user?.propietario?.codigo || '')}`)}>Actualizame</Button>
-                                        : <Button variant="success" className="rounded-pill" onClick={() => nav(`/${rutas.Propietarios.Registro}`)}>Registrame</Button>
-                                }
+                                <Button variant="success" className="rounded-pill" onClick={() => nav(`/${rutas.Propietarios.Registro}`)}>Registrame</Button>
                             </Col>
                         </Row>
                     </Col>

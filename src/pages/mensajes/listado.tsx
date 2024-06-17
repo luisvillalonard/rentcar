@@ -1,9 +1,6 @@
-import { Badge, Button, ButtonGroup, Card, Container, Table } from "react-bootstrap"
-import { CiEdit } from 'react-icons/ci';
-import { GoShieldCheck } from 'react-icons/go';
+import { Badge, Table } from "react-bootstrap"
 import { useData } from "../../hooks/useData";
 import { FormatDate_DDMMYYYY } from "../../hooks/useUtils";
-import Estado from "../../components/estado";
 import { useEffect } from "react";
 
 const MensajesListado = () => {
@@ -40,7 +37,7 @@ const MensajesListado = () => {
                     mensajes && mensajes.length === 0
                         ? <tr><td colSpan={4}>0 mensajes</td></tr>
                         : mensajes && mensajes.map(mensaje => {
-                            return <tr>
+                            return <tr key={mensaje.id}>
                                 <td>{mensaje.nombre}</td>
                                 <td>{mensaje.correo}</td>
                                 <td>{FormatDate_DDMMYYYY(mensaje.fecha)}</td>

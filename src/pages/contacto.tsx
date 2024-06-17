@@ -6,9 +6,17 @@ import { PiMapPinAreaLight } from "react-icons/pi";
 import MensajeFormulario from "./mensajes/formulario";
 import { RiContactsLine } from "react-icons/ri";
 import { AiOutlineMessage } from "react-icons/ai";
+import { useEffect } from "react";
 
 const ContactoPage = () => {
-    const { contextAuth: { state: { user } } } = useData();
+    const { 
+        contextAuth: { state: { user } },
+        contextMensajes: { nuevo }
+    } = useData();
+
+    useEffect(() => {
+        nuevo && nuevo()
+    },[])
 
     return (
         <Container as={Col} className="mt-4 mb-3 col-md-9">
@@ -21,7 +29,7 @@ const ContactoPage = () => {
                         <AiOutlineMessage className="me-2" />
                         <span>Mensaje</span>
                     </div>
-                    <MensajeFormulario />
+                    <MensajeFormulario Flotante={false} />
                 </Col>
                 <Col md={5} xs={12}>
                     <Container>

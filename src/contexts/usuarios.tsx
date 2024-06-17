@@ -2,13 +2,14 @@ import { createContext, Reducer, useReducer } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { ControlProps, RequestFilter, ResponseResult } from "../interfaces/globales/global";
 import reducer, { ACTIONS, ACTIONTYPES, GlobalContextState, initialState, State } from "../reducers/global";
-import { Usuario } from "../interfaces/entidades/usuario";
+import { Usuario, UsuarioCambioClave } from "../interfaces/entidades/usuario";
 import { getParamsUrlToString } from "../hooks/useUtils";
 import { Login } from "../interfaces/globales/auth";
 
 export interface UsuarioContextState<T> extends GlobalContextState<T> {
     obtener: (item: Login) => Promise<ResponseResult<Login>>,
-    cambiarClave: (item: Usuario) => Promise<ResponseResult<Usuario>>,
+    porCodigo: (item: string) => Promise<ResponseResult<Usuario>>,
+    cambiarClave: (item: UsuarioCambioClave) => Promise<ResponseResult<Usuario>>,
 }
 
 export const UsuariosContext = createContext<UsuarioContextState<Usuario>>({} as UsuarioContextState<Usuario>)
@@ -20,6 +21,7 @@ function UsuariosProvider({ children }: ControlProps) {
     const nuevo = async (): Promise<void> => {
         editar({
             id: 0,
+            codigo: null,
             acceso: null,
             creadoEn: null,
             rol: null,
@@ -56,6 +58,13 @@ function UsuariosProvider({ children }: ControlProps) {
         }
     }
 
+    const porCodigo = async (codigo: string): Promise<ResponseResult<Usuario>> => {
+        dispatch({ type: ACTIONS.FETCHING });
+        const resp = await api.Get<Usuario>(`usuarios/${codigo}`);
+        dispatch({ type: ACTIONS.FETCH_COMPLETE });
+        return resp;
+    }
+
     const obtener = async (item: Login): Promise<ResponseResult<Login>> => {
         dispatch({ type: ACTIONS.FETCHING });
         const resp = await api.Post<Login>('usuarios/obtener', item);
@@ -63,7 +72,7 @@ function UsuariosProvider({ children }: ControlProps) {
         return resp;
     }
 
-    const cambiarClave = async (item: Usuario): Promise<ResponseResult<Usuario>> => {
+    const cambiarClave = async (item: UsuarioCambioClave): Promise<ResponseResult<Usuario>> => {
         dispatch({ type: ACTIONS.FETCHING });
         const resp = await api.Post<Usuario>('usuarios/cambiarClave', item);
         dispatch({ type: ACTIONS.FETCH_COMPLETE, model: null, reload: true });
@@ -85,6 +94,7 @@ function UsuariosProvider({ children }: ControlProps) {
             todos,
             obtener,
             cambiarClave,
+            porCodigo
         }}>
             {children}
         </UsuariosContext.Provider>

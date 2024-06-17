@@ -43,31 +43,37 @@ const LoginPage = () => {
                     <h1 className="text-center fs-2 fw-bolder mb-4">Log&iacute;n</h1>
                     <Form id="formvehiculo" noValidate validated={validated} onSubmit={validarUsuario}>
                         <Row>
-                            <Col xs={12} className="mb-4">
+                            <Form.Group as={Col} xs={12} className="mb-4 position-relative">
                                 <Form.Control
                                     id="ctUsuario"
                                     type="text"
                                     name="usuario"
                                     autoComplete="off"
                                     placeholder="escriba aqui su cédula sin guiones"
-                                    className="rounded-pill border-white bg-opacity-25 text-center text-white py-2 px-3 mb-2 placeholder-white"
+                                    className="rounded-pill border-white bg-opacity-25 text-center text-white py-2 px-3 placeholder-white"
                                     required
                                     value={entidad.usuario || ''}
                                     onChange={handleChangeInput}
                                     onFocus={(e) => e.target.select()} />
-                            </Col>
-                            <Col xs={12} className="mb-4">
+                                <Form.Control.Feedback tooltip type="invalid" className="fw-bolder">
+                                    Obligatorio
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group as={Col} xs={12} className="mb-4 position-relative">
                                 <Form.Control
                                     type="password"
                                     name="clave"
                                     autoComplete="off"
                                     placeholder="escriba aqui su contraseña"
-                                    className="rounded-pill border-white bg-opacity-25 text-center text-white py-2 px-3 mb-2 placeholder-white"
+                                    className="rounded-pill border-white bg-opacity-25 text-center text-white py-2 px-3 placeholder-white"
                                     required
                                     value={entidad.clave || ''}
                                     onChange={handleChangeInput}
                                     onFocus={(e) => e.target.select()} />
-                            </Col>
+                                <Form.Control.Feedback tooltip type="invalid" className="fw-bolder">
+                                    Obligatorio
+                                </Form.Control.Feedback>
+                            </Form.Group>
                             <Col xs={12} className="mb-4 align-self-end">
                                 <Button type="submit" variant="primary" className="w-100 rounded-pill">Aceptar</Button>
                             </Col>

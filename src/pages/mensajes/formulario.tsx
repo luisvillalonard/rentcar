@@ -9,16 +9,44 @@ import { FaTelegramPlane } from "react-icons/fa";
 import { GoMail } from "react-icons/go";
 import { BsBodyText, BsAlphabet } from "react-icons/bs";
 
-const MensajeFormulario = () => {
+type MensajeProps = {
+    Flotante: boolean
+}
+const MensajeFormulario = (props: MensajeProps) => {
+    const { contextMensajes: { state: { modelo, editando }, cancelar } } = useData();
+    const { Flotante } = props;
+
+    if (!modelo) {
+        return <></>
+    }
+
+    if (!Flotante) {
+        return (
+            <Formulario />
+        )
+    }
+
+    return (
+        <Modal show={editando} onHide={cancelar} centered scrollable>
+            <Modal.Header className="bg-primary text-white py-2">
+                <Modal.Title>
+                    <span className="fw-lighter">Mensaje</span>
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Formulario />
+            </Modal.Body>
+        </Modal>
+    )
+}
+export default MensajeFormulario;
+
+const Formulario = () => {
     const {
         contextMensajes: { state: { modelo, editando }, nuevo, agregar }
     } = useData();
     const { entidad, editar, handleChangeInput } = useForm<Mensaje | null | undefined>(modelo);
     const [validated, setValidated] = useState<boolean>(false);
-
-    useEffect(() => {
-        nuevo && nuevo();
-    }, [])
 
     useEffect(() => {
         if (modelo) {
@@ -53,11 +81,10 @@ const MensajeFormulario = () => {
         }
     }
 
-    console.log(entidad)
     return (
         <Form id="formalquiler" autoComplete="off" noValidate validated={validated} onSubmit={guardar}>
             <Row className="g-2">
-                <Col md={12} className="mb-3">
+                <Form.Group as={Col} md={12} className="mb-3 position-relative">
                     <div className="d-flex align-items-center">
                         <BsAlphabet className="fs-5 text-secondary me-2" />
                         <span className="fs-6 fw-bolder mb-1">Nombre</span>
@@ -70,8 +97,11 @@ const MensajeFormulario = () => {
                         required
                         value={entidad?.nombre || ''}
                         onChange={handleChangeInput} />
-                </Col>
-                <Col md={12} className="mb-3">
+                    <Form.Control.Feedback tooltip type="invalid" className="fw-bolder py-0">
+                        Obligatorio
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md={12} className="mb-3 position-relative">
                     <div className="d-flex align-items-center">
                         <GoMail className="fs-5 text-secondary me-2" />
                         <span className="fs-6 fw-bolder mb-1">Correo</span>
@@ -84,8 +114,11 @@ const MensajeFormulario = () => {
                         required
                         value={entidad?.correo || ''}
                         onChange={handleChangeInput} />
-                </Col>
-                <Col md={12} className="mb-3">
+                    <Form.Control.Feedback tooltip type="invalid" className="fw-bolder py-0">
+                        Obligatorio
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group as={Col} md={12} className="mb-3 position-relative">
                     <div className="d-flex align-items-center">
                         <BsBodyText className="fs-5 text-secondary me-2" />
                         <span className="fs-6 fw-bolder mb-1">Comentario {`(${entidad?.comentario?.length || 0} de 500)`}</span>
@@ -99,7 +132,10 @@ const MensajeFormulario = () => {
                         required
                         value={entidad?.comentario || ''}
                         onChange={handleChangeInput} />
-                </Col>
+                    <Form.Control.Feedback tooltip type="invalid" className="fw-bolder py-0">
+                        Obligatorio
+                    </Form.Control.Feedback>
+                </Form.Group>
                 <Col md={12} className="mb-3">
                     <Button type="submit" variant="primary" className="rounded-pill d-flex align-items-center">
                         <FaTelegramPlane className="me-3" />
@@ -110,4 +146,3 @@ const MensajeFormulario = () => {
         </Form>
     )
 }
-export default MensajeFormulario;

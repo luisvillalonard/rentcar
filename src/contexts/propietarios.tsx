@@ -26,6 +26,7 @@ function PropietariosProvider({ children }: ControlProps) {
             telefono1: null,
             telefono2: null,
             correo: null,
+            usuario: null
         });
     }
 
