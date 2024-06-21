@@ -1,9 +1,7 @@
-const isLocalhost:boolean = true;
-
 export const secretKey = '123456789';
 
 export const API_URL = {
-    Base: isLocalhost ? 'https://localhost:44391' : 'https://rentcarapi.somee.com',
+    Base: process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test' ? 'https://localhost:44391' : 'https://rentcarapi.somee.com',
     //Base: 'https://rentcarapi.somee.com',
 
     ApiDefaultProps:  {

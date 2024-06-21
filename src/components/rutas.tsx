@@ -37,7 +37,10 @@ export const rutas = {
         PorPropietario: 'alquileres/propietario/:codigo',
     },
     Contacto: 'contacto',
-    Mensajes: 'mensajes',
+    Mensajes: {
+        Todos: 'mensajes',
+        PorPropietario: 'mensajes/:codigo'
+    },
     Usuarios: {
         Todos: 'usuarios',
         RegistroConfirmacion: 'usuarios/confirmacion/:codigo',
@@ -57,16 +60,19 @@ const RutasApp = () => {
 
             {/* Vehiculos */}
             <Route path={`/${rutas.Vehiculos.Registro}`} element={<VehiculoPage />} />
+            <Route path={`/${rutas.Vehiculos.Todos}`} element={<VehiculosListaPage />} />
             <Route path={`/${rutas.Vehiculos.PorPropietario}`} element={<VehiculosListaPage />} />
             <Route path={`/${rutas.Vehiculos.Disponibles}`} element={<VehiculosDisponblesPage />} />
             <Route path={`/${rutas.Vehiculos.DisponiblesConFiltro}`} element={<VehiculosDisponblesPage />} />
 
             {/* Alquileres */}
             <Route path={`/${rutas.Alquileres.Registro}`} element={<AlquilerRegistroPage />} />
+            <Route path={`/${rutas.Alquileres.Todos}`} element={<AlquileresListaPage />} />
             <Route path={`/${rutas.Alquileres.PorPropietario}`} element={<AlquileresListaPage />} />
 
             {/* Mensajes */}
-            <Route path={`/${rutas.Mensajes}`} element={<MensajesPage />} />
+            <Route path={`/${rutas.Mensajes.Todos}`} element={<MensajesPage />} />
+            <Route path={`/${rutas.Mensajes.PorPropietario}`} element={<MensajesPage />} />
 
             {/* Usuarios */}
             <Route path={`/${rutas.Usuarios.Todos}`} element={<UsuariosPage />} />

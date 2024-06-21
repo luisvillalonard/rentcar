@@ -15,6 +15,8 @@ function RolesProvider({ children }: ControlProps) {
         editar({
             id: 0,
             nombre: null,
+            administrador: false,
+            propietario: false
         });
     }
 

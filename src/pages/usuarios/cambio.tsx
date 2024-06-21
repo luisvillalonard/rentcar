@@ -11,6 +11,7 @@ import { Usuario, UsuarioCambioClave } from "../../interfaces/entidades/usuario"
 import Loading from "../../components/loading";
 import { useNavigate } from "react-router";
 import { rutas } from "../../components/rutas";
+import RequiredLabel from "../../components/requiredLabel";
 
 const CambioClavePage = () => {
     const {
@@ -105,7 +106,7 @@ const CambioClavePage = () => {
                                                 <div className="vr h-100" />
                                             </div>
                                             <div className="flex-grow-1 align-self-center fs-3 lh-1 p-1">
-                                                {`Se ha confirmado el acceso y cambiado la contraseña para el usuario de ${user?.propietario?.nombre}`}
+                                                {`Se ha confirmado el acceso y cambiado la contraseña para el usuario de ${user?.persona?.nombre}`}
                                             </div>
                                         </div>
                                     </Card.Body>
@@ -118,21 +119,21 @@ const CambioClavePage = () => {
                                                 <BsAlphabet className="fs-3 text-secondary me-2" />
                                                 <span className="fs-6 fw-bolder">Nombres y Apellidos</span>
                                             </div>
-                                            <div>{user?.propietario?.nombre || 'Desconocido'}</div>
+                                            <div>{user?.persona?.nombre || 'Desconocido'}</div>
                                         </Col>
                                         <Col xs={12} className="mb-4">
                                             <div className="d-flex aling-items-center">
                                                 <IoIosBarcode className="fs-3 text-secondary me-2" />
                                                 <span className="fs-6 fw-bolder">C&eacute;dula</span>
                                             </div>
-                                            <div>{user?.propietario?.cedula || 'N/A'}</div>
+                                            <div>{user?.persona?.documento || 'N/A'}</div>
                                         </Col>
                                         <Col xs={12} className="mb-4">
                                             <div className="d-flex aling-items-center">
                                                 <GoMail className="fs-4 text-secondary me-2" />
                                                 <span className="fs-6 fw-bolder">Correo Electr&oacute;nico</span>
                                             </div>
-                                            <div>{user?.propietario?.correo || 'N/A'}</div>
+                                            <div>{user?.persona?.correo || 'N/A'}</div>
                                         </Col>
                                     </Row>
                                     <Row>
@@ -142,16 +143,14 @@ const CambioClavePage = () => {
                                                 <span className="fs-6 fw-bolder">Nueva Contrase&ntilde;a</span>
                                             </div>
                                             <Form.Control
-                                                type="text"
+                                                type="password"
                                                 name="passwordNew"
                                                 autoComplete="off"
                                                 className="border-0 border-bottom rounded-0"
                                                 required
                                                 value={usuario?.passwordNew || ''}
                                                 onChange={handleChangeInput} />
-                                            <Form.Control.Feedback tooltip type="invalid" className="fw-bolder">
-                                                Obligatorio
-                                            </Form.Control.Feedback>
+                                            <RequiredLabel Text="Obligatorio" />
                                         </Form.Group>
                                     </Row>
                                     <Row>
@@ -161,16 +160,14 @@ const CambioClavePage = () => {
                                                 <span className="fs-6 fw-bolder">Repetir Contrase&ntilde;a</span>
                                             </div>
                                             <Form.Control
-                                                type="text"
+                                                type="password"
                                                 name="passwordConfirm"
                                                 autoComplete="off"
                                                 className="border-0 border-bottom rounded-0"
                                                 required
                                                 value={usuario?.passwordConfirm || ''}
                                                 onChange={handleChangeInput} />
-                                            <Form.Control.Feedback tooltip type="invalid" className="fw-bolder">
-                                                Obligatorio
-                                            </Form.Control.Feedback>
+                                            <RequiredLabel Text="Obligatorio" />
                                         </Form.Group>
                                     </Row>
                                     <Row>

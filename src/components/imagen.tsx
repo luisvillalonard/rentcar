@@ -1,5 +1,6 @@
+import { ChangeEvent, useState } from "react";
 import { Foto } from "../interfaces/entidades/foto";
-import { MdOutlineNoPhotography } from "react-icons/md";
+import { MdOutlineNoPhotography, MdOutlinePhoto } from "react-icons/md";
 
 type ImagenProps = {
     Item: Foto | null | undefined,
@@ -8,6 +9,8 @@ type ImagenProps = {
 
 const Imagen = (props: ImagenProps) => {
     const { Item, children } = props;
+    const [alto, setAlto] = useState<number>(0);
+    const [ancho, setAncho] = useState<number>(0);
 
     return (
         <div className="mg-fluid img-thumbnail position-relative" style={{ paddingTop: '100%' }}>
@@ -20,7 +23,13 @@ const Imagen = (props: ImagenProps) => {
                 {
                     !Item
                     ? <MdOutlineNoPhotography className="position-absolute text-secondary h-75 w-auto" style={{ top: '12.5%', left: '12.5%' }} />
-                    : <img src={Item?.imagen as string} className="m-auto w-100 h-auto" />
+                    : <img
+                        src={Item?.imagen as string}
+                        className={`m-auto ${ancho > alto ? 'w-100 h-auto' : alto > ancho ? 'w-auto h-100' : 'w-100 h-auto'} rounded`}
+                        onLoad={(evt: ChangeEvent<HTMLImageElement>) => {
+                            setAncho(evt.currentTarget.naturalWidth); 
+                            setAlto(evt.currentTarget.naturalHeight);
+                        }} />
                 }
             </div>
         </div>

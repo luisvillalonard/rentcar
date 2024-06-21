@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import Loading from "../../components/loading";
 import VehiculoDetalle from "./vehiculo";
+import { rutas } from "../../components/rutas";
 
 const VehiculosListaPage = () => {
     const {
@@ -29,34 +30,39 @@ const VehiculosListaPage = () => {
 
     return (
         <>
-            <Container className="mt-4 mb-3">
-                <h1 className="fs-2 fw-lighter mb-4">
-                    {
-                        user?.propietario
-                            ? 'Mis Vehículos'
-                            : 'Lista de Vehículos'
-                    }
-                </h1>
+            <Container className="py-4">
+                <Col lg={10} md={10} xs={12} className="mx-auto">
+                    <Row>
+                        <Col md xs className="align-self-center mb-3">
+                            <h1 className="fs-2 fw-light m-0">
+                                {
+                                    user?.persona
+                                        ? 'Mis Vehículos'
+                                        : 'Lista de Vehículos'
+                                }
+                            </h1>
+                        </Col>
+                        {
+                            user?.rol?.propietario
+                                ?
+                                <Col md="auto" xs="auto" className="align-self-center mb-3">
+                                    <Button variant="primary" className="rounded-pill" onClick={() => nav(`/${rutas.Vehiculos.Registro}`)}>Registrar Nuevo</Button>
+                                </Col>
+                                : <></>
+                        }
+                    </Row>
 
-                <Card className="shadow-sm mb-4">
-                    <Card.Body className="pb-1">
-                        <Row>
-                            <Col md className="mb-3">
-                                <Button variant="primary" className="rounded-pill" onClick={() => nav('/vehiculos/registro')}>Registrar Nuevo</Button>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
-
-                <Row>
-                    {
-                        datos && datos.map(item => {
-                            return (
-                                <VehiculoDetalle key={item.codigo} Item={item} Alquilar={false} />
-                            )
-                        })
-                    }
-                </Row>
+                    <hr className="mt-3 mb-4 pb-1" />
+                    <Row>
+                        {
+                            datos && datos.map(item => {
+                                return (
+                                    <VehiculoDetalle key={item.codigo} Item={item} Alquilar={false} />
+                                )
+                            })
+                        }
+                    </Row>
+                </Col>
             </Container>
             <Loading Visible={procesando} Mensaje="Cargando vehículos, espere..." />
         </>

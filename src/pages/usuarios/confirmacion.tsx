@@ -4,20 +4,21 @@ import { useData } from "../../hooks/useData";
 import { Alerta, Exito } from "../../hooks/useMensaje";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { BsAlphabet } from "react-icons/bs";
-import { Propietario } from "../../interfaces/entidades/propietario";
+import { Persona } from "../../interfaces/entidades/persona";
 import { IoIosBarcode } from "react-icons/io";
 import { GoMail, GoShieldCheck, GoAlert } from "react-icons/go";
 import { MdOutlinePassword } from "react-icons/md";
 import { useForm } from "../../hooks/useForm";
 import { UsuarioCambioClave } from "../../interfaces/entidades/usuario";
 import Loading from "../../components/loading";
+import RequiredLabel from "../../components/requiredLabel";
 
 const ConfirmacionRegistroPage = () => {
     const {
         contextPropietarios: { state: { modelo, procesando }, nuevo, porCodigo },
         contextUsuarios: { state: { procesando: procesandoClave }, cambiarClave }
     } = useData();
-    const [propietario, setPropietario] = useState<Propietario | null | undefined>(modelo);
+    const [propietario, setPropietario] = useState<Persona | null | undefined>(modelo);
     const { entidad: usuario, editar, handleChangeInput } = useForm<UsuarioCambioClave>({ id: 0, passwordNew: null, passwordConfirm: null });
     const [isValid, setIsValid] = useState<boolean>(true);
     const [validated, setValidated] = useState<boolean>(false);
@@ -34,7 +35,7 @@ const ConfirmacionRegistroPage = () => {
             setPropietario(null);
         }
         if (resp.ok && resp.datos) {
-            const prop = resp.datos as Propietario;
+            const prop = resp.datos as Persona;
             setPropietario(prop);
             if (!prop.usuario?.cambio) {
                 editar({
@@ -136,7 +137,7 @@ const ConfirmacionRegistroPage = () => {
                                                 <IoIosBarcode className="fs-3 text-secondary me-2" />
                                                 <span className="fs-6 fw-bolder">C&eacute;dula</span>
                                             </div>
-                                            <div>{propietario?.cedula || 'N/A'}</div>
+                                            <div>{propietario?.documento || 'N/A'}</div>
                                         </Col>
                                         <Col xs={12} className="mb-4">
                                             <div className="d-flex aling-items-center">
@@ -153,16 +154,14 @@ const ConfirmacionRegistroPage = () => {
                                                 <span className="fs-6 fw-bolder">Nueva Contrase&ntilde;a</span>
                                             </div>
                                             <Form.Control
-                                                type="text"
+                                                type="password"
                                                 name="passwordNew"
                                                 autoComplete="off"
                                                 className="border-0 border-bottom rounded-0"
                                                 required
                                                 value={usuario?.passwordNew || ''}
                                                 onChange={handleChangeInput} />
-                                            <Form.Control.Feedback tooltip type="invalid" className="fw-bolder">
-                                                Obligatorio
-                                            </Form.Control.Feedback>
+                                            <RequiredLabel Text="Obligatorio" />
                                         </Col>
                                     </Row>
                                     <Row>
@@ -172,16 +171,14 @@ const ConfirmacionRegistroPage = () => {
                                                 <span className="fs-6 fw-bolder">Repetir Contrase&ntilde;a</span>
                                             </div>
                                             <Form.Control
-                                                type="text"
+                                                type="password"
                                                 name="passwordConfirm"
                                                 autoComplete="off"
                                                 className="border-0 border-bottom rounded-0"
                                                 required
                                                 value={usuario?.passwordConfirm || ''}
                                                 onChange={handleChangeInput} />
-                                            <Form.Control.Feedback tooltip type="invalid" className="fw-bolder">
-                                                Obligatorio
-                                            </Form.Control.Feedback>
+                                            <RequiredLabel Text="Obligatorio" />
                                         </Col>
                                     </Row>
                                     <Row>

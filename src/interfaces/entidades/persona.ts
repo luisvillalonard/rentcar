@@ -1,15 +1,19 @@
+import { Foto } from "./foto";
 import { Municipio } from "./municipio";
-import { Provincia } from "./provincia";
+import { Usuario } from "./usuario";
 
-export interface Persona {
+export interface    Persona {
     id: number,
-    esCedula: boolean,
-    documento: string | null,
+    codigo: string | null,
     nombre: string | null,
+    documento: string | null,
+    esCedula: boolean,
     licencia: string | null,
-    provincia: Provincia | null,
-    municipio: Municipio | null,
     direccion: string | null,
+    municipio: Municipio | null,
     telefono1: string | null,
     telefono2: string | null,
+    correo: string | null,
+    usuario: Usuario | null,
+    foto: Foto | null,
 }

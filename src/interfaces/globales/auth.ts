@@ -1,4 +1,4 @@
-import { Propietario } from "../entidades/propietario";
+import { Persona } from "../entidades/persona";
 import { Rol } from "../entidades/rol";
 
 export interface Login {
@@ -12,6 +12,6 @@ export interface User {
     codigo: string | null,
     acceso: string | null,
     rol: Rol | null,
-    propietario: Propietario | null,
+    persona: Persona | null,
     token: string | null,
 }

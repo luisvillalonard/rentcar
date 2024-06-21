@@ -22,7 +22,7 @@ function VehiculosProvider({ children }: ControlProps) {
         editar({
             id: 0,
             codigo: null,
-            propietario: null,
+            persona: null,
             tipo: null,
             marca: null,
             modelo: null,
@@ -86,7 +86,7 @@ function VehiculosProvider({ children }: ControlProps) {
 
     const porPropietario = async (codigo: string): Promise<void> => {
         dispatch({ type: ACTIONS.FETCHING });
-        const resp = await api.Get<Vehiculo[]>(`vehiculos/${codigo}/propietario`);
+        const resp = await api.Get<Vehiculo[]>(`vehiculos/propietario/${codigo}`);
         if (resp.ok) {
             dispatch({ type: ACTIONS.SUCCESS_WITH_DATA, data: resp.datos as Vehiculo[], paginacion: resp.paginacion });
         } else {

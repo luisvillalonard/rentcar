@@ -24,15 +24,18 @@ const AlquilerRegistroPage = () => {
     const { entidad: alquiler, editar: editarAlquiler, handleChangeInput: handleChangeInputAlquiler } = useForm<Alquiler | null | undefined>(modelo);
     const { entidad: persona, editar: editarPersona, handleChangeInput: handleChangeInputPersona } = useForm<Persona | null>({
         id: 0,
-        esCedula: true,
-        documento: null,
+        codigo: null,
         nombre: null,
+        documento: null,
+        esCedula: true,
         licencia: null,
-        provincia: null,
-        municipio: null,
         direccion: null,
+        municipio: null,
         telefono1: null,
         telefono2: null,
+        correo: null,
+        usuario: null,
+        foto: null,
     });
     const [validated, setValidated] = useState<boolean>(false);
     const { codigo } = useParams();

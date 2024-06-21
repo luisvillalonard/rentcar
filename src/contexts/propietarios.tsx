@@ -3,16 +3,16 @@ import { useFetch } from "../hooks/useFetch";
 import { ControlProps, RequestFilter, ResponseResult } from "../interfaces/globales/global";
 import reducer, { ACTIONS, ACTIONTYPES, GlobalContextState, initialState, State } from "../reducers/global";
 import { getParamsUrlToString } from "../hooks/useUtils";
-import { Propietario } from "../interfaces/entidades/propietario";
+import { Persona } from "../interfaces/entidades/persona";
 
 export interface PropietarioContextState<T> extends GlobalContextState<T> {
-    porCodigo: (codigo: string) => Promise<ResponseResult<Propietario>>,
+    porCodigo: (codigo: string) => Promise<ResponseResult<Persona>>,
 }
 
-export const PropietariosContext = createContext<PropietarioContextState<Propietario>>({} as PropietarioContextState<Propietario>)
+export const PropietariosContext = createContext<PropietarioContextState<Persona>>({} as PropietarioContextState<Persona>)
 
 function PropietariosProvider({ children }: ControlProps) {
-    const [state, dispatch] = useReducer<Reducer<State<Propietario>, ACTIONTYPES<Propietario>>>(reducer, initialState);
+    const [state, dispatch] = useReducer<Reducer<State<Persona>, ACTIONTYPES<Persona>>>(reducer, initialState);
     const api = useFetch();
 
     const nuevo = async (): Promise<void> => {
@@ -20,47 +20,50 @@ function PropietariosProvider({ children }: ControlProps) {
             id: 0,
             codigo: null,
             nombre: null,
-            cedula: null,
+            documento: null,
+            esCedula: true,
+            licencia: null,
             direccion: null,
             municipio: null,
             telefono1: null,
             telefono2: null,
             correo: null,
-            usuario: null
+            usuario: null,
+            foto: null
         });
     }
 
-    const editar = async (item: Propietario): Promise<void> => {
+    const editar = async (item: Persona): Promise<void> => {
         dispatch({ type: ACTIONS.EDITING, model: item });
     }
 
-    const agregar = async (item: Propietario): Promise<ResponseResult<Propietario>> => {
+    const agregar = async (item: Persona): Promise<ResponseResult<Persona>> => {
         dispatch({ type: ACTIONS.FETCHING });
-        const resp = await api.Post<Propietario>('propietarios', item);
+        const resp = await api.Post<Persona>('propietarios', item);
         dispatch({ type: ACTIONS.FETCH_COMPLETE, model: null, reload: true });
         return resp;
     }
 
-    const actualizar = async (item: Propietario): Promise<ResponseResult<Propietario>> => {
+    const actualizar = async (item: Persona): Promise<ResponseResult<Persona>> => {
         dispatch({ type: ACTIONS.FETCHING });
-        const resp = await api.Put<Propietario>('propietarios', item);
+        const resp = await api.Put<Persona>('propietarios', item);
         dispatch({ type: ACTIONS.FETCH_COMPLETE, model: null, reload: true });
         return resp;
     }
 
     const todos = async (filtro: RequestFilter | null | undefined): Promise<void> => {
         dispatch({ type: ACTIONS.FETCHING });
-        const resp = await api.Get<Propietario[]>(`propietarios${getParamsUrlToString(filtro)}`);
+        const resp = await api.Get<Persona[]>(`propietarios${getParamsUrlToString(filtro)}`);
         if (resp.ok) {
-            dispatch({ type: ACTIONS.SUCCESS_WITH_DATA, data: resp.datos as Propietario[], paginacion: resp.paginacion });
+            dispatch({ type: ACTIONS.SUCCESS_WITH_DATA, data: resp.datos as Persona[], paginacion: resp.paginacion });
         } else {
-            dispatch({ type: ACTIONS.SUCCESS_WITH_DATA, data: Array<Propietario>(), paginacion: initialState.paginacion });
+            dispatch({ type: ACTIONS.SUCCESS_WITH_DATA, data: Array<Persona>(), paginacion: initialState.paginacion });
         }
     }
 
-    const porCodigo = async (codigo: string): Promise<ResponseResult<Propietario>> => {
+    const porCodigo = async (codigo: string): Promise<ResponseResult<Persona>> => {
         dispatch({ type: ACTIONS.FETCHING });
-        const resp = await api.Get<Propietario>(`propietarios/${codigo}`);
+        const resp = await api.Get<Persona>(`propietarios/${codigo}`);
         dispatch({ type: ACTIONS.FETCH_COMPLETE });
         return resp;
     }

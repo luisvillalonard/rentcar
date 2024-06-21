@@ -37,7 +37,8 @@ export function useForm<T>(initState: T) {
 
                 if (!target.multiple) {
 
-                    const file = files.item(0);
+                    elementValue = await getFile(files.item(0) as File);
+                    /* const file = files.item(0);
                     if (file) {
                         const value = await GetFileBase64(files.item(0)) as string;
                         if (value) {
@@ -47,11 +48,15 @@ export function useForm<T>(initState: T) {
                                 extension: file.type.split('/')[1],
                             } as Foto;
                         }
-                    }
+                    } */
 
                 } else {
 
-                    await Promise.all(Array.from(files).map(async (file) => await fileBase64(file)))
+                    await Promise.all(Array.from(files).map(async (file) => await getFile(file)))
+                        .then((urls) => {
+                            elementValue = urls as Foto[];
+                        });
+                    /* await Promise.all(Array.from(files).map(async (file) => await fileBase64(file)))
                         .then((urls) => {
                             elementValue = urls.map(url => {
                                 return {
@@ -60,7 +65,7 @@ export function useForm<T>(initState: T) {
                                     extension: url as string
                                 } as Foto;
                             })
-                        });
+                        }); */
                 }
                 break;
 
@@ -81,11 +86,61 @@ export function useForm<T>(initState: T) {
         })
     }
 
+    const handleChangeInputFiles = async ({ target }: ChangeEvent<HTMLInputElement>): Promise<Foto[]> => {
+        const { files } = target;
+        let elementValue: Foto[] = [];
+
+        if (!files) {
+            return elementValue;
+        } else {
+            if (!target.multiple) {
+
+                const foto = await getFile(files.item(0) as File);
+                if (foto) {
+                    elementValue = [ foto ];
+                }
+    
+            } else {
+    
+                await Promise.all(Array.from(files).map(async (file) => await getFile(file)))
+                    .then((arr) => {
+                        elementValue = arr.map(foto => foto as Foto);
+                    });
+                /* await Promise.all(Array.from(files).map(async (file) => await fileBase64(file)))
+                    .then((urls) => {
+                        elementValue = urls.map(url => {
+                            return {
+                                id: 0,
+                                imagen: url as string,
+                                extension: url as string
+                            } as Foto;
+                        })
+                    }); */
+            }
+        }
+
+        return elementValue;
+    }
+
+    const getFile = async (file: File) => {
+        const value = await GetFileBase64(file) as string;
+        if (value) {
+            return {
+                id: 0,
+                imagen: value,
+                extension: file.type.split('/')[1],
+            } as Foto;
+        }
+
+        return null;
+    }
+
     return {
         entidad,
         editar,
         handleChangeInput,
         handleChangeSelect,
+        handleChangeInputFiles,
     }
 
 }

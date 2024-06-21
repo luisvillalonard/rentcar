@@ -8,7 +8,7 @@ import UsuariosProvider, { UsuarioContextState, UsuariosContext } from "../conte
 import { Usuario } from "../interfaces/entidades/usuario";
 import RolesProvider, { RolesContext } from "../contexts/roles";
 import { Rol } from "../interfaces/entidades/rol";
-import { Propietario } from "../interfaces/entidades/propietario";
+import { Persona } from "../interfaces/entidades/persona";
 import PropietariosProvider, { PropietarioContextState, PropietariosContext } from "../contexts/propietarios";
 import ProvinciasProvider, { ProvinciasContext } from "../contexts/provincias";
 import MunicipiosProvider, { MunicipiosContext } from "../contexts/municipios";
@@ -38,8 +38,6 @@ import { Transmision } from "../interfaces/entidades/transmision";
 import TransmisionesProvider, { TransmisionesContext } from "../contexts/transmisiones";
 import { Uso } from "../interfaces/entidades/uso";
 import UsosProvider, { UsosContext } from "../contexts/usos";
-import { Persona } from "../interfaces/entidades/persona";
-import PersonasProvider, { PersonasContext } from "../contexts/personas";
 import ConfiguracionAlquilerNotasProvider, { ConfiguracionAlquilerNotasContext } from "../contexts/configuracionAlquilerNotas";
 import { ConfiguracionAlquilerNota } from "../interfaces/entidades/configuracionAlquilerNota";
 import AlquilersProvider, { AlquilerContextState, AlquileresContext } from "../contexts/alquileres";
@@ -72,7 +70,6 @@ export const ProvidersTree = Providers([
     /* Entidades */
     [UsuariosProvider, {}],
     [PropietariosProvider, {}],
-    [PersonasProvider, {}],
     [VehiculosProvider, {}],
     [AlquilersProvider, {}],
     [MensajesProvider, {}],
@@ -102,8 +99,7 @@ export const useData = () => {
 
     /* Entidades */
     const contextUsuarios = useContext(UsuariosContext) as UsuarioContextState<Usuario>;
-    const contextPropietarios = useContext(PropietariosContext) as PropietarioContextState<Propietario>;
-    const contextPersonas = useContext(PersonasContext) as UsuarioContextState<Persona>;
+    const contextPropietarios = useContext(PropietariosContext) as PropietarioContextState<Persona>;
     const contextVehiculos = useContext(VehiculosContext) as VehiculoContextState<Vehiculo>;
     const contextAlquileres = useContext(AlquileresContext) as AlquilerContextState<Alquiler>;
     const contextMensajes = useContext(MensajesContext) as AlquilerContextState<Mensaje>;
@@ -133,7 +129,6 @@ export const useData = () => {
         /* Entidades */
         contextUsuarios,
         contextPropietarios,
-        contextPersonas,
         contextVehiculos,
         contextAlquileres,
         contextMensajes,

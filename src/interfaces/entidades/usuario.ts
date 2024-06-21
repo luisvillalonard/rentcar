@@ -1,3 +1,4 @@
+import { Persona } from "./persona";
 import { Rol } from "./rol";
 
 export interface Usuario {

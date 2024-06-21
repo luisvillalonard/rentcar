@@ -6,7 +6,7 @@ import { Foto } from "./foto";
 import { Marca } from "./marca";
 import { Modelo } from "./modelo";
 import { Motor } from "./motor";
-import { Propietario } from "./propietario";
+import { Persona } from "./persona";
 import { Traccion } from "./traccion";
 import { Transmision } from "./transmision";
 import { VehiculoTipo } from "./vehiculoTipo";
@@ -14,7 +14,7 @@ import { VehiculoTipo } from "./vehiculoTipo";
 export interface Vehiculo {
     id: number,
     codigo: string | null,
-    propietario: Propietario | null,
+    persona: Persona | null,
     tipo: VehiculoTipo | null,
     marca: Marca | null,
     modelo: Modelo | null,
