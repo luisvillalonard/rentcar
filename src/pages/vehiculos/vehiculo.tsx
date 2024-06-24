@@ -39,7 +39,7 @@ const VehiculoDetalle = (props: VehiculoAlquilerProps) => {
                 </Col>
                 <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center">
                     <IoSpeedometerOutline className="fs-3" />
-                    <span>{FormatNumber(Item.uso, 0)}</span>
+                    <span>{`${FormatNumber(Item.uso, 0)} ${Item.enKilometros ? '(km)' : '(mi)'}`}</span>
                 </Col>
             </Row>
             {

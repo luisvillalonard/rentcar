@@ -63,6 +63,7 @@ const MenuApp = () => {
                                         LoggedOut();
                                         getUser();
                                         navUrl(`${rutas.Home}`);
+                                        window.location.reload();
                                     }
                                 })
                         }}>

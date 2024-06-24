@@ -43,7 +43,7 @@ const LoginPage = () => {
                     <h1 className="text-center fs-2 fw-bolder mb-4">Log&iacute;n</h1>
                     <Form id="formvehiculo" noValidate validated={validated} onSubmit={validarUsuario}>
                         <Row>
-                            <Form.Group as={Col} xs={12} className="mb-4 position-relative">
+                            <Form.Group as={Col} xs={12} className="mb-5 position-relative">
                                 <Form.Control
                                     id="ctUsuario"
                                     type="text"
@@ -59,7 +59,7 @@ const LoginPage = () => {
                                     Obligatorio
                                 </Form.Control.Feedback>
                             </Form.Group>
-                            <Form.Group as={Col} xs={12} className="mb-4 position-relative">
+                            <Form.Group as={Col} xs={12} className="mb-3 position-relative">
                                 <Form.Control
                                     type="password"
                                     name="clave"
@@ -74,24 +74,22 @@ const LoginPage = () => {
                                     Obligatorio
                                 </Form.Control.Feedback>
                             </Form.Group>
+                            <Col xs={12} className="mb-5 align-self-center">
+                                <Container>
+                                    <Form.Check
+                                        id="recuerdame"
+                                        name="recuerdame"
+                                        type="switch"
+                                        label="Recuerdame"
+                                        className="text-white"
+                                        required={false}
+                                        formNoValidate={false}
+                                        checked={entidad?.recuerdame}
+                                        onChange={handleChangeInput} />
+                                </Container>
+                            </Col>
                             <Col xs={12} className="mb-4 align-self-end">
                                 <Button type="submit" variant="primary" className="w-100 rounded-pill">Aceptar</Button>
-                            </Col>
-                            <Col xs={12} className="mb-3 align-self-center">
-                                <Row>
-                                    <Col xs={6}>
-                                        <Form.Check
-                                            id="recuerdame"
-                                            name="recuerdame"
-                                            type="switch"
-                                            label="Recuerdame"
-                                            className="text-white"
-                                            required={false}
-                                            formNoValidate={false}
-                                            checked={entidad?.recuerdame}
-                                            onChange={handleChangeInput} />
-                                    </Col>
-                                </Row>
                             </Col>
                         </Row>
                     </Form>

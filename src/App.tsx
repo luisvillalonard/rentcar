@@ -8,7 +8,7 @@ import LoginPage from './pages/login';
 import FooterApp from './components/footer';
 
 const App = () => {
-  const { contextAuth: { state: { isLogin }, getUser } } = useData();
+  const { contextAuth: { state: { user, isLogin }, getUser } } = useData();
   const url = useLocation();
 
   useEffect(() => {

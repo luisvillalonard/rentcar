@@ -17,19 +17,19 @@ const Loading = (props: LoadingProps) => {
         <div className="loading">
             <div className="loading-body">
                 <Oval
-                    height={40}
-                    width={40}
+                    height={55}
+                    width={55}
                     color="#1b6ec2"
                     wrapperStyle={{}}
                     wrapperClass=""
                     visible={true}
                     ariaLabel='oval-loading'
                     secondaryColor="#7aa5cf"
-                    strokeWidth={2}
-                    strokeWidthSecondary={2}
+                    strokeWidth={6}
+                    strokeWidthSecondary={6}
 
                 />
-                <span className="d-flex">{Mensaje || 'Procesando...'}</span>
+                <span className="d-flex fs-6 pt-3">{Mensaje || 'Procesando...'}</span>
             </div>
         </div>
     )

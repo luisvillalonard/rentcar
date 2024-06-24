@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Button, Col, Container, Form, InputGroup, Row } from "react-bootstrap"
 import { useData } from "../../hooks/useData";
 import { useParams } from "react-router";
@@ -12,6 +12,10 @@ import { BsReceipt } from "react-icons/bs";
 import { Persona } from "../../interfaces/entidades/persona";
 import { Provincia } from "../../interfaces/entidades/provincia";
 import { FormatNumber } from "../../hooks/useUtils";
+import { RiContactsLine } from "react-icons/ri";
+import Imagen from "../../components/imagen";
+import { MdOutlinePhotoCamera } from "react-icons/md";
+import RequiredLabel from "../../components/requiredLabel";
 
 const AlquilerRegistroPage = () => {
     const {
@@ -38,6 +42,7 @@ const AlquilerRegistroPage = () => {
         foto: null,
     });
     const [validated, setValidated] = useState<boolean>(false);
+    const refFoto = useRef<HTMLInputElement>(null);
     const { codigo } = useParams();
 
     const cargar = async () => {
@@ -60,7 +65,7 @@ const AlquilerRegistroPage = () => {
 
         switch (name) {
             case 'fechaInicio': inicio = value; break;
-            case 'fechaFin':    fin = value;    break;
+            case 'fechaFin': fin = value; break;
         }
 
         if (inicio && fin && precio) {
@@ -147,8 +152,11 @@ const AlquilerRegistroPage = () => {
 
                 <Form id="formalquiler" noValidate validated={validated} onSubmit={guardar}>
 
-                    <h1 className="fs-4 fw-bolder text-primary m-0">Mis Datos</h1>
-                    <hr className="my-3" />
+                    <div className="fw-bolder text-primary d-flex align-items-center m-0 fs-4">
+                        <RiContactsLine className="me-2" />
+                        <span>Mis Datos</span>
+                    </div>
+                    <hr className="my-2 mb-4" />
                     <Row>
                         <Col md={6} className="align-self-end mb-4">
                             <Row>
@@ -157,6 +165,7 @@ const AlquilerRegistroPage = () => {
                                         id="esCedula"
                                         type="switch"
                                         label="Cédula"
+                                        className="fw-bolder"
                                         checked={persona?.esCedula}
                                         onChange={() => {
                                             editarPersona({ ...persona, esCedula: true } as Persona)
@@ -167,6 +176,7 @@ const AlquilerRegistroPage = () => {
                                         id="esPasaporte"
                                         type="switch"
                                         label="Pasaporte"
+                                        className="fw-bolder"
                                         checked={!persona?.esCedula}
                                         onChange={() => {
                                             editarPersona({ ...persona, esCedula: false } as Persona)
@@ -189,7 +199,7 @@ const AlquilerRegistroPage = () => {
                             </Row>
                         </Col>
                         <Form.Group as={Col} md={6} className="mb-4">
-                            <Form.Label className="mb-1">No. Licencia</Form.Label>
+                            <Form.Label className="fw-bolder mb-1">No. Licencia</Form.Label>
                             <Form.Control
                                 id="licencia"
                                 name="licencia"
@@ -204,7 +214,7 @@ const AlquilerRegistroPage = () => {
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group as={Col} md={12} className="mb-4">
-                            <Form.Label className="mb-1">Nombres y Apellidos</Form.Label>
+                            <Form.Label className="fw-bolder mb-1">Nombres y Apellidos</Form.Label>
                             <Form.Control
                                 id="nombre"
                                 name="nombre"
@@ -218,8 +228,8 @@ const AlquilerRegistroPage = () => {
                                 Obligatorio
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Col md={6} className="mb-3">
-                            <Form.Label className="mb-1">Provincia</Form.Label>
+                        <Form.Group as={Col} md={6} className="mb-3">
+                            <Form.Label className="fw-bolder mb-1">Provincia</Form.Label>
                             <Form.Select
                                 name="provincia"
                                 className="border-0 border-bottom rounded-0"
@@ -244,9 +254,9 @@ const AlquilerRegistroPage = () => {
                                     );
                                 })}
                             </Form.Select >
-                        </Col>
-                        <Col md={6} className="mb-3">
-                            <Form.Label className="mb-1">Municipio</Form.Label>
+                        </Form.Group>
+                        <Form.Group as={Col} md={6} className="mb-3">
+                            <Form.Label className="fw-bolder mb-1">Municipio</Form.Label>
                             <Form.Select
                                 name="municipio"
                                 className="border-0 border-bottom rounded-0"
@@ -271,9 +281,9 @@ const AlquilerRegistroPage = () => {
                                             );
                                         })}
                             </Form.Select >
-                        </Col>
-                        <Col xs={12} className="mb-4">
-                            <Form.Label className="mb-1">Direcci&oacute;n</Form.Label>
+                        </Form.Group>
+                        <Form.Group as={Col} xs={12} className="mb-4">
+                            <Form.Label className="fw-bolder mb-1">Direcci&oacute;n</Form.Label>
                             <Form.Control
                                 id="direccion"
                                 name="direccion"
@@ -283,9 +293,9 @@ const AlquilerRegistroPage = () => {
                                 required
                                 value={persona?.direccion || ''}
                                 onChange={handleChangeInputPersona} />
-                        </Col>
-                        <Col md={6} xs={12} className="mb-4">
-                            <Form.Label className="mb-1">Tel&eacute;fono Celular</Form.Label>
+                        </Form.Group>
+                        <Form.Group as={Col} md={6} xs={12} className="mb-4">
+                            <Form.Label className="fw-bolder mb-1">Tel&eacute;fono Celular</Form.Label>
                             <Form.Control
                                 id="telefono1"
                                 name="telefono1"
@@ -295,9 +305,9 @@ const AlquilerRegistroPage = () => {
                                 required
                                 value={persona?.telefono1 || ''}
                                 onChange={handleChangeInputPersona} />
-                        </Col>
-                        <Col md={6} xs={12} className="mb-4">
-                            <Form.Label className="mb-1">Tel&eacute;fono Residencia</Form.Label>
+                        </Form.Group>
+                        <Form.Group as={Col} md={6} xs={12} className="mb-4">
+                            <Form.Label className="fw-bolder mb-1">Tel&eacute;fono Residencia</Form.Label>
                             <Form.Control
                                 id="telefono2"
                                 name="telefono2"
@@ -306,16 +316,33 @@ const AlquilerRegistroPage = () => {
                                 className="border-0 border-bottom rounded-0"
                                 value={persona?.telefono2 || ''}
                                 onChange={handleChangeInputPersona} />
-                        </Col>
+                        </Form.Group>
+                        <Form.Group as={Col} md={12} className="mb-4">
+                            <Form.Label className="fw-bolder mb-1">Correo Electr&oacute;nico</Form.Label>
+                            <Form.Control
+                                id="correo"
+                                name="correo"
+                                type="email"
+                                autoComplete="off"
+                                className="border-0 border-bottom rounded-0"
+                                required
+                                value={persona?.correo || ''}
+                                onChange={handleChangeInputPersona} />
+                            <RequiredLabel Text="Obligatorio" />
+                        </Form.Group>
                     </Row>
 
-                    <h1 className="fs-4 fw-bolder text-primary m-0">Alquiler</h1>
-                    <hr className="my-3" />
+                    <h1 className="fs-4 fw-bolder text-primary m-0"></h1>
+                    <div className="fw-bolder text-primary d-flex align-items-center m-0 fs-4">
+                        <BsReceipt className="me-2" />
+                        <span>Alquiler</span>
+                    </div>
+                    <hr className="my-2 mb-4" />
                     <Row>
                         <Col md={6} sm={6} xs={12}>
                             <Row>
-                                <Col xs={12} className="mb-4">
-                                    <Form.Label className="mb-1">Fecha Inicio</Form.Label>
+                                <Form.Group as={Col} xs={12} className="mb-4">
+                                    <Form.Label className="fw-bolder mb-1">Fecha Inicio</Form.Label>
                                     <Form.Control
                                         id="fechaInicio"
                                         name="fechaInicio"
@@ -324,9 +351,9 @@ const AlquilerRegistroPage = () => {
                                         required
                                         value={alquiler?.fechaInicio || ''}
                                         onChange={calculaPrecio} />
-                                </Col>
-                                <Col xs={12} className="mb-4">
-                                    <Form.Label className="mb-1">Fecha Fín</Form.Label>
+                                </Form.Group>
+                                <Form.Group as={Col} xs={12} className="mb-4">
+                                    <Form.Label className="fw-bolder mb-1">Fecha Fín</Form.Label>
                                     <Form.Control
                                         id="fechaFin"
                                         name="fechaFin"
@@ -335,8 +362,8 @@ const AlquilerRegistroPage = () => {
                                         required
                                         value={alquiler?.fechaFin || ''}
                                         onChange={calculaPrecio} />
-                                </Col>
-                                <Col md sm={12} xs={12} className="mb-4">
+                                </Form.Group>
+                                <Form.Group as={Col} md sm={12} xs={12} className="mb-4">
                                     <InputGroup>
                                         <InputGroup.Text className="border-0 border-end bg-transparent">
                                             <Form.Check
@@ -359,7 +386,7 @@ const AlquilerRegistroPage = () => {
                                                 }} />
                                         </InputGroup.Text>
                                     </InputGroup>
-                                </Col>
+                                </Form.Group>
                                 <Col xs={12} className="mb-4">
                                     <div className="w-100 bg-primary text-white text-center fs-2">
                                         RD$ <span className="fw-bold">{FormatNumber(alquiler?.efectivo || 0, 0)}</span>
@@ -368,33 +395,22 @@ const AlquilerRegistroPage = () => {
                             </Row>
                         </Col>
                         <Col md={6} sm={6} xs={12}>
-                            <Row>
-                                <Col xs={12} className="mb-3">
-                                    <Form.Label className="mb-1">Comprobante</Form.Label>
-                                    <Form.Control type="file" name="comprobante" required={!alquiler?.enEfectivo} onChange={handleChangeInputAlquiler} accept=".jpg, .jpeg, .png" />
-                                </Col>
-                                <Col xs={12} className="mb-3">
-                                    {
-                                        !alquiler?.comprobante
-                                            ?
-                                            <div className="img-thumbnail position-relative" style={{ paddingTop: '100%' }}>
-                                                <BsReceipt className="position-absolute text-secondary h-75 w-auto"
-                                                    style={{
-                                                        top: '12.5%',
-                                                        left: '12.5%'
-                                                    }} />
-                                            </div>
-                                            :
-                                            <div className="img-thumbnail" style={{
-                                                paddingTop: '100%',
-                                                background: `url(${alquiler?.comprobante.imagen})`,
-                                                backgroundSize: 'cover',
-                                                backgroundRepeat: 'no-repeat',
-                                                backgroundPosition: 'center'
-                                            }} />
-                                    }
-                                </Col>
-                            </Row>
+                            <Imagen Item={alquiler?.comprobante}>
+                                <div className="position-absolute w-100 start-0 bottom-0" style={{ zIndex: 100 }}>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            if (refFoto && refFoto.current && refFoto.current.click) {
+                                                refFoto.current?.click()
+                                            }
+                                        }}
+                                        className="btn btn-link align-self-center rounded-0 w-100 bg-secondary opacity-50 text-decoration-none text-white">
+                                        <MdOutlinePhotoCamera className="fs-3 me-3" />
+                                        <span>Cargar Recibo</span>
+                                    </button>
+                                    <input ref={refFoto} type="file" name="comprobante" required={!alquiler?.enEfectivo} className="d-none" onChange={handleChangeInputAlquiler} accept=".jpg, .jpeg, .png" />
+                                </div>
+                            </Imagen>
                         </Col>
                     </Row>
 

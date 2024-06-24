@@ -33,22 +33,13 @@ export function useForm<T>(initState: T) {
                 if (!files) {
                     elementValue = null;
                     break;
+                } else if (files.length == 0) {
+                    elementValue = null;
+                    break;
                 }
 
                 if (!target.multiple) {
-
                     elementValue = await getFile(files.item(0) as File);
-                    /* const file = files.item(0);
-                    if (file) {
-                        const value = await GetFileBase64(files.item(0)) as string;
-                        if (value) {
-                            elementValue = {
-                                id: 0,
-                                imagen: value,
-                                extension: file.type.split('/')[1],
-                            } as Foto;
-                        }
-                    } */
 
                 } else {
 
@@ -56,16 +47,6 @@ export function useForm<T>(initState: T) {
                         .then((urls) => {
                             elementValue = urls as Foto[];
                         });
-                    /* await Promise.all(Array.from(files).map(async (file) => await fileBase64(file)))
-                        .then((urls) => {
-                            elementValue = urls.map(url => {
-                                return {
-                                    id: 0,
-                                    imagen: url as string,
-                                    extension: url as string
-                                } as Foto;
-                            })
-                        }); */
                 }
                 break;
 

@@ -1,12 +1,10 @@
-import { Badge, Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { Badge, Container, Table } from "react-bootstrap";
+import { useLocation, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useData } from "../../hooks/useData";
-import VehiculoDetalle from "../vehiculos/vehiculo";
 import { Alquiler } from "../../interfaces/entidades/alquiler";
 import Loading from "../../components/loading";
 import { FormatDate_DDMMYYYY, FormatNumber } from "../../hooks/useUtils";
-import Imagen from "../../components/imagen";
 
 const AlquileresListaPage = () => {
     const {
@@ -69,11 +67,11 @@ const AlquileresListaPage = () => {
                                         <td>
                                             {
                                                 inicio > hoy
-                                                    ? <Badge bg="secondary">Pendiente</Badge>
+                                                    ? <Badge pill bg="secondary">Pendiente</Badge>
                                                     : hoy > inicio && hoy < fin
-                                                        ? <Badge bg="primary">En Curso</Badge>
+                                                        ? <Badge pill bg="primary">En Curso</Badge>
                                                         : fin < hoy
-                                                            ? <Badge bg="success">En Curso</Badge>
+                                                            ? <Badge pill bg="success">En Curso</Badge>
                                                             : <></>
                                             }
                                         </td>

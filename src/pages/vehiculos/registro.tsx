@@ -10,6 +10,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Alerta, Exito } from "../../hooks/useMensaje";
 import { Accesorio } from "../../interfaces/entidades/accesorio";
 import Imagen from "../../components/imagen";
+import Loading from "../../components/loading";
 
 const VehiculoPage = () => {
     const {
@@ -405,15 +406,25 @@ const VehiculoPage = () => {
                             </Col>
                         </Row>
 
-                        <h1 className="fw-bolder text-primary d-flex align-items-center mb-4 fs-4">
-                            <BsUiChecks className="me-2" />
-                            <span className="me-2">Accesorios</span>
-                            {
-                                entidad?.fotos.length === 0
-                                    ? <Badge pill bg="secondary">{entidad?.accesorios.length}</Badge>
-                                    : <Badge pill bg="primary">{entidad?.accesorios.length}</Badge>
-                            }
-                        </h1>
+                        <Row>
+                            <Col md="auto" className="align-self-center">
+                                <h1 className="fw-bolder text-primary d-flex align-items-center fs-4">
+                                    <BsUiChecks className="me-2" />
+                                    <span className="me-2">Accesorios</span>
+                                </h1>
+                            </Col>
+                            <Col className="align-self-center">
+                                <Button variant="primary" size="sm" className="position-relative rounded-pill align-self-center" onClick={() => setVerAccesorios(true)}>
+                                    Agregar
+                                    {
+                                        entidad?.accesorios.length === 0
+                                            ? <Badge pill bg="secondary" className="position-absolute top-0 start-100 translate-middle">{entidad?.accesorios.length}</Badge>
+                                            : <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">{entidad?.accesorios.length}</Badge>
+                                    }
+                                </Button>
+                            </Col>
+                        </Row>
+                        <hr className="mt-3 mb-4 pb-1" />
                         <Row className="mb-5">
                             {
                                 entidad?.accesorios.map((acc, index) => {
@@ -425,32 +436,30 @@ const VehiculoPage = () => {
                                     )
                                 })
                             }
-                            <Col xs="auto" className="text-nowrap align-self-center mb-2">
-                                <Container>
-                                    <Button variant="primary" size="sm" className="rounded-pill align-self-center" onClick={() => setVerAccesorios(true)}>
-                                        {`Agregar ${entidad?.accesorios.length !== 0 ? 'más' : ''}`.trim()}
-                                    </Button>
-                                </Container>
-                            </Col>
                         </Row>
 
-                        <h1 className="fw-bolder text-primary d-flex align-items-center mb-4 fs-4">
-                            <MdOutlinePhotoCamera className="fs-3 me-2" />
-                            <span className="me-2">Fotos</span>
-                            {
-                                entidad?.fotos.length === 0
-                                    ? <Badge pill bg="secondary">{entidad?.fotos.length}</Badge>
-                                    : <Badge pill bg="primary">{entidad?.fotos.length}</Badge>
-                            }
-                        </h1>
-                        <Container className="mb-3">
-                            <input type="file" name="fotos" className="d-none" ref={refFile}
-                                multiple accept=".jpg, .jpeg, .png"
-                                onChange={cargarFotos} />
-                            <Button variant="primary" size="sm" className="rounded-pill align-self-center" onClick={() => refFile.current?.click()}>
-                                Agregar Fotos
-                            </Button>
-                        </Container>
+                        <Row>
+                            <Col md="auto" className="align-self-center">
+                                <h1 className="fw-bolder text-primary d-flex align-items-center fs-4">
+                                    <MdOutlinePhotoCamera className="fs-3 me-2" />
+                                    <span className="me-2">Fotos</span>
+                                </h1>
+                            </Col>
+                            <Col className="align-self-center">
+                                <input type="file" name="fotos" className="d-none" ref={refFile}
+                                    multiple accept=".jpg, .jpeg, .png"
+                                    onChange={cargarFotos} />
+                                <Button variant="primary" size="sm" className="position-relative rounded-pill align-self-center" onClick={() => refFile.current?.click()}>
+                                    Agregar
+                                    {
+                                        entidad?.fotos.length === 0
+                                            ? <Badge pill bg="secondary" className="position-absolute top-0 start-100 translate-middle">{entidad?.fotos.length}</Badge>
+                                            : <Badge pill bg="danger" className="position-absolute top-0 start-100 translate-middle">{entidad?.fotos.length}</Badge>
+                                    }
+                                </Button>
+                            </Col>
+                        </Row>
+                        <hr className="mt-3 mb-4 pb-1" />
                         <Row>
                             {
                                 entidad?.fotos && entidad.fotos.map((foto, pos) => {
@@ -507,6 +516,7 @@ const VehiculoPage = () => {
                     <Button variant="outline-secondary" className="rounded-pill" onClick={() => setVerAccesorios(false)}>Cerrar</Button>
                 </Modal.Footer>
             </Modal>
+            <Loading Visible={procesando} Mensaje="procesando, espere..." />
         </>
     )
 }
