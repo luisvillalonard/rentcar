@@ -4,16 +4,16 @@ import MenuApp from "./menu";
 const FooterApp = () => {
 
     return (
-        <Container fluid={true} className="bg-black p-5">
+        <Container fluid={true} className="bg-black py-5">
             <Container>
                 <Row>
-                    <Col md={6}>
+                    <Col lg="auto" md="auto">
                         <div className="d-flex flex-column text-white opacity-75">
-                            <h1 className="fs-1 fw-bolder">La Manguera Car</h1>
+                            <h1 className="fs-3 fw-bolder">La Manguera Car</h1>
                             <h1 className="fs-6 fw-bolder">Copyright © 2024</h1>
                         </div>
                     </Col>
-                    <Col md={6}>
+                    <Col lg md>
                         <div className="d-flex flex-column">
                             <Navbar bg="transparent py-1" data-bs-theme="dark">
                                 <Container>

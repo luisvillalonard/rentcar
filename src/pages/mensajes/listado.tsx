@@ -1,4 +1,4 @@
-import { Badge, Table } from "react-bootstrap"
+import { Badge, Col, Container, Table } from "react-bootstrap"
 import { useData } from "../../hooks/useData";
 import { FormatDate_DDMMYYYY } from "../../hooks/useUtils";
 import { useEffect } from "react";

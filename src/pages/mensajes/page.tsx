@@ -9,7 +9,7 @@ const MensajesPage = () => {
 
     useEffect(() => {
         cancelar && cancelar();
-    },[])
+    }, [])
 
     return (
         <>
@@ -17,16 +17,15 @@ const MensajesPage = () => {
                 <Col lg={10} md={10} xs={12} className="mx-auto">
                     <Row>
                         <Col md xs className="align-self-center mb-3">
-                            <h1 className="fs-2 fw-light m-0">Registro de Propietario</h1>
+                            <h1 className="fs-2 fw-light m-0">Gesti&oacute;n de Mensajes</h1>
                         </Col>
                         <Col md="auto" xs="auto" className="align-self-center mb-3">
                             <Button type="button" variant="primary" className="rounded-pill" onClick={() => nuevo && nuevo()}>Nuevo</Button>
                         </Col>
                     </Row>
+                    <hr />
+                    <MensajesListado />
                 </Col>
-                <h1 className="fs-2 fw-light m-0">Gesti&oacute;n de Mensajes</h1>
-                <hr />
-                <MensajesListado />
             </Container>
             <MensajeFormulario Flotante={true} />
         </>

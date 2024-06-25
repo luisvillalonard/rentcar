@@ -39,8 +39,9 @@ const MenuApp = () => {
                                     <Nav.Link onClick={() => navUrl(`/${rutas.Alquileres.Todos}`)} className="fs-6 text-white">
                                         Alquileres
                                     </Nav.Link>
-                                    <Nav.Link onClick={() => navUrl(`/${rutas.Propietarios.Perfil.replace(':codigo', user.codigo || '')}`)} className="fs-6 text-white align-self-center">Mi Perf&iacute;l</Nav.Link>
-                                    <Nav.Link onClick={() => navUrl(`/${rutas.Mensajes.Todos}`)} className="fs-6 text-white align-self-center">Mensajes</Nav.Link>
+                                    <Nav.Link onClick={() => navUrl(`/${rutas.Propietarios.Perfil.replace(':codigo', user.codigo || '')}`)} className="fs-6 text-white">Mi Perf&iacute;l</Nav.Link>
+                                    <Nav.Link onClick={() => navUrl(`/${rutas.Mensajes.Todos}`)} className="fs-6 text-white">Mensajes</Nav.Link>
+                                    <Nav.Link onClick={() => navUrl(`/${rutas.Usuarios.Todos}`)} className="fs-6 text-white">Usuarios</Nav.Link>
                                 </>
                                 :
                                 <>
@@ -50,13 +51,13 @@ const MenuApp = () => {
                                     <Nav.Link onClick={() => navUrl(`/${rutas.Alquileres.PorPropietario.replace(':codigo', user?.persona?.codigo || '')}`)} className="fs-6 text-white">
                                         Alquileres
                                     </Nav.Link>
-                                    <Nav.Link onClick={() => navUrl(`/${rutas.Propietarios.Perfil.replace(':codigo', user?.persona?.codigo || '')}`)} className="fs-6 text-white align-self-center">Mi Perf&iacute;l</Nav.Link>
-                                    <Nav.Link onClick={() => navUrl(`/${rutas.Mensajes.PorPropietario.replace(':codigo', user?.persona?.codigo || '')}`)} className="fs-6 text-white align-self-center">Mensajes</Nav.Link>
+                                    <Nav.Link onClick={() => navUrl(`/${rutas.Propietarios.Perfil.replace(':codigo', user?.persona?.codigo || '')}`)} className="fs-6 text-white">Mi Perf&iacute;l</Nav.Link>
+                                    <Nav.Link onClick={() => navUrl(`/${rutas.Mensajes.PorPropietario.replace(':codigo', user?.persona?.codigo || '')}`)} className="fs-6 text-white">Mensajes</Nav.Link>
                                 </>
                         }
                         <Nav.Link onClick={() => navUrl(`/${rutas.Contacto}`)} className="fs-6 text-white">Contacto</Nav.Link>
                         <Nav.Link onClick={() => navUrl(`/${rutas.Usuarios.CambioClave}`)} className="fs-6 text-white">Cambiar Clave</Nav.Link>
-                        <Nav.Link className="fs-6 text-white align-self-center" onClick={async () => {
+                        <Nav.Link className="fs-6 text-white" onClick={async () => {
                             await Confirmacion('Esta seguro(a) que desea cerrar la sesión?')
                                 .then((resp) => {
                                     if (resp) {

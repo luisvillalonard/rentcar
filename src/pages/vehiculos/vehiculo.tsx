@@ -29,15 +29,15 @@ const VehiculoDetalle = (props: VehiculoAlquilerProps) => {
                 <Col xs={12}>
                     <h5 className="fw-bolder text-center my-3">{`${Item.modelo?.marca.nombre} ${Item.modelo?.nombre}`}</h5>
                 </Col>
-                <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center">
+                <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center text-center">
                     <GiMechanicalArm className="fs-3" />
                     <span>{Item.transmision?.nombre}</span>
                 </Col>
-                <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center">
+                <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center text-center">
                     <BsFuelPump className="fs-3" />
                     <span>{Item.combustible?.nombre}</span>
                 </Col>
-                <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center">
+                <Col md={4} sm={4} xs={4} className="d-flex flex-column align-items-center text-center">
                     <IoSpeedometerOutline className="fs-3" />
                     <span>{`${FormatNumber(Item.uso, 0)} ${Item.enKilometros ? '(km)' : '(mi)'}`}</span>
                 </Col>

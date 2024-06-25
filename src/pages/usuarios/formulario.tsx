@@ -72,7 +72,7 @@ const UsuarioFormulario = () => {
                             <label className="form-label mb-1">Rol</label>
                             <Form.Select
                                 required
-                                defaultValue={entidad?.rol?.id}
+                                value={entidad?.rol?.id}
                                 onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
                                     const nuevoRol = roles.filter(rol => rol.id === parseInt(evt.target.value))[0];
                                     editar({ ...entidad, rol: nuevoRol } as Usuario);

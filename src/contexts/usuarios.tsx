@@ -23,7 +23,7 @@ function UsuariosProvider({ children }: ControlProps) {
             id: 0,
             codigo: null,
             acceso: null,
-            creadoEn: null,
+            creadoEn: new Date().toISOString().slice(0, 10),
             rol: null,
             cambio: false,
             activo: true,

@@ -128,293 +128,295 @@ const AlquilerRegistroPage = () => {
 
     return (
         <>
-            <Container as={Col} className="mt-4 mb-3 col-md-9">
-                <Row>
-                    <Col className="mb-3">
-                        <h1 className="fs-2 fw-lighter m-0">Registro de Alquiler</h1>
-                    </Col>
-                    <Col xs="auto" className="mb-3">
-                        <Button type="submit" variant="primary" form="formalquiler">Alquilar</Button>
-                    </Col>
-                </Row>
-                <hr />
-
-                <Row>
-                    <Col xs={12} className="mb-5">
-                        <h1 className="fs-3 fw-bolder">Veh&iacute;culo</h1>
-                        {
-                            vehiculo
-                                ? <VehiculoAlquiler key={vehiculo.codigo} Item={vehiculo} Alquilar={false} />
-                                : <></>
-                        }
-                    </Col>
-                </Row>
-
-                <Form id="formalquiler" noValidate validated={validated} onSubmit={guardar}>
-
-                    <div className="fw-bolder text-primary d-flex align-items-center m-0 fs-4">
-                        <RiContactsLine className="me-2" />
-                        <span>Mis Datos</span>
-                    </div>
-                    <hr className="my-2 mb-4" />
+            <Container className="py-4">
+                <Col lg={10} md={10} xs={12} className="mx-auto">
                     <Row>
-                        <Col md={6} className="align-self-end mb-4">
-                            <Row>
-                                <Col xs={6}>
-                                    <Form.Check
-                                        id="esCedula"
-                                        type="switch"
-                                        label="Cédula"
-                                        className="fw-bolder"
-                                        checked={persona?.esCedula}
-                                        onChange={() => {
-                                            editarPersona({ ...persona, esCedula: true } as Persona)
-                                        }} />
-                                </Col>
-                                <Col xs={6}>
-                                    <Form.Check
-                                        id="esPasaporte"
-                                        type="switch"
-                                        label="Pasaporte"
-                                        className="fw-bolder"
-                                        checked={!persona?.esCedula}
-                                        onChange={() => {
-                                            editarPersona({ ...persona, esCedula: false } as Persona)
-                                        }} />
-                                </Col>
-                                <Form.Group as={Col} xs={12}>
-                                    <Form.Control
-                                        id="documento"
-                                        name="documento"
-                                        type="text"
-                                        autoComplete="off"
-                                        className="border-0 border-bottom rounded-0"
-                                        required
-                                        value={persona?.documento || ''}
-                                        onChange={handleChangeInputPersona} />
-                                    <Form.Control.Feedback type="invalid" className="fw-bolder">
-                                        Obligatorio
-                                    </Form.Control.Feedback>
-                                </Form.Group>
-                            </Row>
+                        <Col className="mb-3">
+                            <h1 className="fs-2 fw-lighter m-0">Registro de Alquiler</h1>
                         </Col>
-                        <Form.Group as={Col} md={6} className="mb-4">
-                            <Form.Label className="fw-bolder mb-1">No. Licencia</Form.Label>
-                            <Form.Control
-                                id="licencia"
-                                name="licencia"
-                                type="text"
-                                autoComplete="off"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                value={persona?.licencia || ''}
-                                onChange={handleChangeInputPersona} />
-                            <Form.Control.Feedback type="invalid" className="fw-bolder">
-                                Obligatorio
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group as={Col} md={12} className="mb-4">
-                            <Form.Label className="fw-bolder mb-1">Nombres y Apellidos</Form.Label>
-                            <Form.Control
-                                id="nombre"
-                                name="nombre"
-                                type="text"
-                                autoComplete="off"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                value={persona?.nombre || ''}
-                                onChange={handleChangeInputPersona} />
-                            <Form.Control.Feedback type="invalid" className="fw-bolder">
-                                Obligatorio
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group as={Col} md={6} className="mb-3">
-                            <Form.Label className="fw-bolder mb-1">Provincia</Form.Label>
-                            <Form.Select
-                                name="provincia"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                defaultValue={persona?.municipio?.provincia?.id}
-                                onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
-                                    const nuevaProvincia = provincias.filter(prov => prov.id === parseInt(evt.target.value))[0];
-                                    editarPersona({
-                                        ...persona,
-                                        municipio: {
-                                            ...persona?.municipio,
-                                            provincia: nuevaProvincia
-                                        } as Provincia
-                                    } as Persona);
-                                }}>
-                                <option value=""></option>
-                                {provincias.map((provincia) => {
-                                    return (
-                                        <option key={provincia.id} value={provincia.id}>
-                                            {provincia.nombre}
-                                        </option>
-                                    );
-                                })}
-                            </Form.Select >
-                        </Form.Group>
-                        <Form.Group as={Col} md={6} className="mb-3">
-                            <Form.Label className="fw-bolder mb-1">Municipio</Form.Label>
-                            <Form.Select
-                                name="municipio"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                defaultValue={persona?.municipio?.id}
-                                onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
-                                    const nuevopMunicipio = municipios.filter(mun => mun.id === parseInt(evt.target.value))[0];
-                                    editarPersona({
-                                        ...persona,
-                                        municipio: nuevopMunicipio
-                                    } as Persona);
-                                }}>
-                                <option value=""></option>
-                                {
-                                    municipios
-                                        .filter(mun => mun.provincia?.id === persona?.municipio?.provincia?.id)
-                                        .map((provincia) => {
-                                            return (
-                                                <option key={provincia.id} value={provincia.id}>
-                                                    {provincia.nombre}
-                                                </option>
-                                            );
-                                        })}
-                            </Form.Select >
-                        </Form.Group>
-                        <Form.Group as={Col} xs={12} className="mb-4">
-                            <Form.Label className="fw-bolder mb-1">Direcci&oacute;n</Form.Label>
-                            <Form.Control
-                                id="direccion"
-                                name="direccion"
-                                type="text"
-                                autoComplete="off"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                value={persona?.direccion || ''}
-                                onChange={handleChangeInputPersona} />
-                        </Form.Group>
-                        <Form.Group as={Col} md={6} xs={12} className="mb-4">
-                            <Form.Label className="fw-bolder mb-1">Tel&eacute;fono Celular</Form.Label>
-                            <Form.Control
-                                id="telefono1"
-                                name="telefono1"
-                                type="text"
-                                autoComplete="off"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                value={persona?.telefono1 || ''}
-                                onChange={handleChangeInputPersona} />
-                        </Form.Group>
-                        <Form.Group as={Col} md={6} xs={12} className="mb-4">
-                            <Form.Label className="fw-bolder mb-1">Tel&eacute;fono Residencia</Form.Label>
-                            <Form.Control
-                                id="telefono2"
-                                name="telefono2"
-                                type="text"
-                                autoComplete="off"
-                                className="border-0 border-bottom rounded-0"
-                                value={persona?.telefono2 || ''}
-                                onChange={handleChangeInputPersona} />
-                        </Form.Group>
-                        <Form.Group as={Col} md={12} className="mb-4">
-                            <Form.Label className="fw-bolder mb-1">Correo Electr&oacute;nico</Form.Label>
-                            <Form.Control
-                                id="correo"
-                                name="correo"
-                                type="email"
-                                autoComplete="off"
-                                className="border-0 border-bottom rounded-0"
-                                required
-                                value={persona?.correo || ''}
-                                onChange={handleChangeInputPersona} />
-                            <RequiredLabel Text="Obligatorio" />
-                        </Form.Group>
+                        <Col xs="auto" className="mb-3">
+                            <Button type="submit" variant="primary" form="formalquiler">Alquilar</Button>
+                        </Col>
+                    </Row>
+                    <hr />
+
+                    <Row>
+                        <Col xs={12} className="mb-5">
+                            <h1 className="fs-3 fw-bolder">Veh&iacute;culo</h1>
+                            {
+                                vehiculo
+                                    ? <VehiculoAlquiler key={vehiculo.codigo} Item={vehiculo} Alquilar={false} />
+                                    : <></>
+                            }
+                        </Col>
                     </Row>
 
-                    <h1 className="fs-4 fw-bolder text-primary m-0"></h1>
-                    <div className="fw-bolder text-primary d-flex align-items-center m-0 fs-4">
-                        <BsReceipt className="me-2" />
-                        <span>Alquiler</span>
-                    </div>
-                    <hr className="my-2 mb-4" />
-                    <Row>
-                        <Col md={6} sm={6} xs={12}>
-                            <Row>
-                                <Form.Group as={Col} xs={12} className="mb-4">
-                                    <Form.Label className="fw-bolder mb-1">Fecha Inicio</Form.Label>
-                                    <Form.Control
-                                        id="fechaInicio"
-                                        name="fechaInicio"
-                                        type="date"
-                                        className="border-0 border-bottom rounded-0"
-                                        required
-                                        value={alquiler?.fechaInicio || ''}
-                                        onChange={calculaPrecio} />
-                                </Form.Group>
-                                <Form.Group as={Col} xs={12} className="mb-4">
-                                    <Form.Label className="fw-bolder mb-1">Fecha Fín</Form.Label>
-                                    <Form.Control
-                                        id="fechaFin"
-                                        name="fechaFin"
-                                        type="date"
-                                        className="border-0 border-bottom rounded-0"
-                                        required
-                                        value={alquiler?.fechaFin || ''}
-                                        onChange={calculaPrecio} />
-                                </Form.Group>
-                                <Form.Group as={Col} md sm={12} xs={12} className="mb-4">
-                                    <InputGroup>
-                                        <InputGroup.Text className="border-0 border-end bg-transparent">
-                                            <Form.Check
-                                                id="enEfectivo"
-                                                type="switch"
-                                                label="Efectivo"
-                                                checked={alquiler?.enEfectivo}
-                                                onChange={() => {
-                                                    editarAlquiler({ ...alquiler, enEfectivo: true } as Alquiler)
-                                                }} />
-                                        </InputGroup.Text>
-                                        <InputGroup.Text className="border-0 bg-transparent">
-                                            <Form.Check
-                                                id="enDeposito"
-                                                type="switch"
-                                                label="Depósito en Banco"
-                                                checked={!alquiler?.enEfectivo}
-                                                onChange={() => {
-                                                    editarAlquiler({ ...alquiler, enEfectivo: false } as Alquiler)
-                                                }} />
-                                        </InputGroup.Text>
-                                    </InputGroup>
-                                </Form.Group>
-                                <Col xs={12} className="mb-4">
-                                    <div className="w-100 bg-primary text-white text-center fs-2">
-                                        RD$ <span className="fw-bold">{FormatNumber(alquiler?.efectivo || 0, 0)}</span>
+                    <Form id="formalquiler" noValidate validated={validated} onSubmit={guardar}>
+
+                        <div className="fw-bolder text-primary d-flex align-items-center m-0 fs-4">
+                            <RiContactsLine className="me-2" />
+                            <span>Mis Datos</span>
+                        </div>
+                        <hr className="my-2 mb-4" />
+                        <Row>
+                            <Col md={6} className="align-self-end mb-4">
+                                <Row>
+                                    <Col xs={6}>
+                                        <Form.Check
+                                            id="esCedula"
+                                            type="switch"
+                                            label="Cédula"
+                                            className="fw-bolder"
+                                            checked={persona?.esCedula}
+                                            onChange={() => {
+                                                editarPersona({ ...persona, esCedula: true } as Persona)
+                                            }} />
+                                    </Col>
+                                    <Col xs={6}>
+                                        <Form.Check
+                                            id="esPasaporte"
+                                            type="switch"
+                                            label="Pasaporte"
+                                            className="fw-bolder"
+                                            checked={!persona?.esCedula}
+                                            onChange={() => {
+                                                editarPersona({ ...persona, esCedula: false } as Persona)
+                                            }} />
+                                    </Col>
+                                    <Form.Group as={Col} xs={12}>
+                                        <Form.Control
+                                            id="documento"
+                                            name="documento"
+                                            type="text"
+                                            autoComplete="off"
+                                            className="border-0 border-bottom rounded-0"
+                                            required
+                                            value={persona?.documento || ''}
+                                            onChange={handleChangeInputPersona} />
+                                        <Form.Control.Feedback type="invalid" className="fw-bolder">
+                                            Obligatorio
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </Row>
+                            </Col>
+                            <Form.Group as={Col} md={6} className="mb-4">
+                                <Form.Label className="fw-bolder mb-1">No. Licencia</Form.Label>
+                                <Form.Control
+                                    id="licencia"
+                                    name="licencia"
+                                    type="text"
+                                    autoComplete="off"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    value={persona?.licencia || ''}
+                                    onChange={handleChangeInputPersona} />
+                                <Form.Control.Feedback type="invalid" className="fw-bolder">
+                                    Obligatorio
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group as={Col} md={12} className="mb-4">
+                                <Form.Label className="fw-bolder mb-1">Nombres y Apellidos</Form.Label>
+                                <Form.Control
+                                    id="nombre"
+                                    name="nombre"
+                                    type="text"
+                                    autoComplete="off"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    value={persona?.nombre || ''}
+                                    onChange={handleChangeInputPersona} />
+                                <Form.Control.Feedback type="invalid" className="fw-bolder">
+                                    Obligatorio
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                            <Form.Group as={Col} md={6} className="mb-3">
+                                <Form.Label className="fw-bolder mb-1">Provincia</Form.Label>
+                                <Form.Select
+                                    name="provincia"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    defaultValue={persona?.municipio?.provincia?.id}
+                                    onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
+                                        const nuevaProvincia = provincias.filter(prov => prov.id === parseInt(evt.target.value))[0];
+                                        editarPersona({
+                                            ...persona,
+                                            municipio: {
+                                                ...persona?.municipio,
+                                                provincia: nuevaProvincia
+                                            } as Provincia
+                                        } as Persona);
+                                    }}>
+                                    <option value=""></option>
+                                    {provincias.map((provincia) => {
+                                        return (
+                                            <option key={provincia.id} value={provincia.id}>
+                                                {provincia.nombre}
+                                            </option>
+                                        );
+                                    })}
+                                </Form.Select >
+                            </Form.Group>
+                            <Form.Group as={Col} md={6} className="mb-3">
+                                <Form.Label className="fw-bolder mb-1">Municipio</Form.Label>
+                                <Form.Select
+                                    name="municipio"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    defaultValue={persona?.municipio?.id}
+                                    onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
+                                        const nuevopMunicipio = municipios.filter(mun => mun.id === parseInt(evt.target.value))[0];
+                                        editarPersona({
+                                            ...persona,
+                                            municipio: nuevopMunicipio
+                                        } as Persona);
+                                    }}>
+                                    <option value=""></option>
+                                    {
+                                        municipios
+                                            .filter(mun => mun.provincia?.id === persona?.municipio?.provincia?.id)
+                                            .map((provincia) => {
+                                                return (
+                                                    <option key={provincia.id} value={provincia.id}>
+                                                        {provincia.nombre}
+                                                    </option>
+                                                );
+                                            })}
+                                </Form.Select >
+                            </Form.Group>
+                            <Form.Group as={Col} xs={12} className="mb-4">
+                                <Form.Label className="fw-bolder mb-1">Direcci&oacute;n</Form.Label>
+                                <Form.Control
+                                    id="direccion"
+                                    name="direccion"
+                                    type="text"
+                                    autoComplete="off"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    value={persona?.direccion || ''}
+                                    onChange={handleChangeInputPersona} />
+                            </Form.Group>
+                            <Form.Group as={Col} md={6} xs={12} className="mb-4">
+                                <Form.Label className="fw-bolder mb-1">Tel&eacute;fono Celular</Form.Label>
+                                <Form.Control
+                                    id="telefono1"
+                                    name="telefono1"
+                                    type="text"
+                                    autoComplete="off"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    value={persona?.telefono1 || ''}
+                                    onChange={handleChangeInputPersona} />
+                            </Form.Group>
+                            <Form.Group as={Col} md={6} xs={12} className="mb-4">
+                                <Form.Label className="fw-bolder mb-1">Tel&eacute;fono Residencia</Form.Label>
+                                <Form.Control
+                                    id="telefono2"
+                                    name="telefono2"
+                                    type="text"
+                                    autoComplete="off"
+                                    className="border-0 border-bottom rounded-0"
+                                    value={persona?.telefono2 || ''}
+                                    onChange={handleChangeInputPersona} />
+                            </Form.Group>
+                            <Form.Group as={Col} md={12} className="mb-4">
+                                <Form.Label className="fw-bolder mb-1">Correo Electr&oacute;nico</Form.Label>
+                                <Form.Control
+                                    id="correo"
+                                    name="correo"
+                                    type="email"
+                                    autoComplete="off"
+                                    className="border-0 border-bottom rounded-0"
+                                    required
+                                    value={persona?.correo || ''}
+                                    onChange={handleChangeInputPersona} />
+                                <RequiredLabel Text="Obligatorio" />
+                            </Form.Group>
+                        </Row>
+
+                        <h1 className="fs-4 fw-bolder text-primary m-0"></h1>
+                        <div className="fw-bolder text-primary d-flex align-items-center m-0 fs-4">
+                            <BsReceipt className="me-2" />
+                            <span>Alquiler</span>
+                        </div>
+                        <hr className="my-2 mb-4" />
+                        <Row>
+                            <Col md={6} sm={6} xs={12}>
+                                <Row>
+                                    <Form.Group as={Col} xs={12} className="mb-4">
+                                        <Form.Label className="fw-bolder mb-1">Fecha Inicio</Form.Label>
+                                        <Form.Control
+                                            id="fechaInicio"
+                                            name="fechaInicio"
+                                            type="date"
+                                            className="border-0 border-bottom rounded-0"
+                                            required
+                                            value={alquiler?.fechaInicio || ''}
+                                            onChange={calculaPrecio} />
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} className="mb-4">
+                                        <Form.Label className="fw-bolder mb-1">Fecha Fín</Form.Label>
+                                        <Form.Control
+                                            id="fechaFin"
+                                            name="fechaFin"
+                                            type="date"
+                                            className="border-0 border-bottom rounded-0"
+                                            required
+                                            value={alquiler?.fechaFin || ''}
+                                            onChange={calculaPrecio} />
+                                    </Form.Group>
+                                    <Form.Group as={Col} md sm={12} xs={12} className="mb-4">
+                                        <InputGroup>
+                                            <InputGroup.Text className="border-0 border-end bg-transparent">
+                                                <Form.Check
+                                                    id="enEfectivo"
+                                                    type="switch"
+                                                    label="Efectivo"
+                                                    checked={alquiler?.enEfectivo}
+                                                    onChange={() => {
+                                                        editarAlquiler({ ...alquiler, enEfectivo: true } as Alquiler)
+                                                    }} />
+                                            </InputGroup.Text>
+                                            <InputGroup.Text className="border-0 bg-transparent">
+                                                <Form.Check
+                                                    id="enDeposito"
+                                                    type="switch"
+                                                    label="Depósito en Banco"
+                                                    checked={!alquiler?.enEfectivo}
+                                                    onChange={() => {
+                                                        editarAlquiler({ ...alquiler, enEfectivo: false } as Alquiler)
+                                                    }} />
+                                            </InputGroup.Text>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Col xs={12} className="mb-4">
+                                        <div className="w-100 bg-primary text-white text-center fs-2">
+                                            RD$ <span className="fw-bold">{FormatNumber(alquiler?.efectivo || 0, 0)}</span>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col md={6} sm={6} xs={12}>
+                                <Imagen Item={alquiler?.comprobante}>
+                                    <div className="position-absolute w-100 start-0 bottom-0" style={{ zIndex: 100 }}>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                if (refFoto && refFoto.current && refFoto.current.click) {
+                                                    refFoto.current?.click()
+                                                }
+                                            }}
+                                            className="btn btn-link align-self-center rounded-0 w-100 bg-secondary opacity-50 text-decoration-none text-white">
+                                            <MdOutlinePhotoCamera className="fs-3 me-3" />
+                                            <span>Cargar Recibo</span>
+                                        </button>
+                                        <input ref={refFoto} type="file" name="comprobante" required={!alquiler?.enEfectivo} className="d-none" onChange={handleChangeInputAlquiler} accept=".jpg, .jpeg, .png" />
                                     </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                        <Col md={6} sm={6} xs={12}>
-                            <Imagen Item={alquiler?.comprobante}>
-                                <div className="position-absolute w-100 start-0 bottom-0" style={{ zIndex: 100 }}>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            if (refFoto && refFoto.current && refFoto.current.click) {
-                                                refFoto.current?.click()
-                                            }
-                                        }}
-                                        className="btn btn-link align-self-center rounded-0 w-100 bg-secondary opacity-50 text-decoration-none text-white">
-                                        <MdOutlinePhotoCamera className="fs-3 me-3" />
-                                        <span>Cargar Recibo</span>
-                                    </button>
-                                    <input ref={refFoto} type="file" name="comprobante" required={!alquiler?.enEfectivo} className="d-none" onChange={handleChangeInputAlquiler} accept=".jpg, .jpeg, .png" />
-                                </div>
-                            </Imagen>
-                        </Col>
-                    </Row>
+                                </Imagen>
+                            </Col>
+                        </Row>
 
-                </Form>
+                    </Form>
+                </Col>
             </Container>
             <Loading Visible={false} Mensaje="procesando, espere..." />
         </>

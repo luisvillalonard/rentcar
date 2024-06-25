@@ -18,12 +18,12 @@ const Estado = (props: EstadoProps) => {
                     valor === true
                         ?
                         <>
-                            <BsCheckCircleFill className={`me-2 ${colorPositivo === null ? 'text-success' : colorPositivo}`} />
+                            <BsCheckCircleFill className={`me-2 ${colorPositivo ?? 'text-success'}`} />
                             <span>{textoPositivo || "Activo"}</span>
                         </>
                         :
                         <>
-                            <BsDashCircleFill className={`me-2 ${colorNegativo === null ? 'text-secondary opacity-50' : colorNegativo}`} />
+                            <BsDashCircleFill className={`me-2 ${colorNegativo ?? 'text-secondary opacity-50'}`} />
                             <span className="text-secondary">{textoNegativo || "Inactivo"}</span>
                         </>
                 }

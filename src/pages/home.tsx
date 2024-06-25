@@ -41,14 +41,14 @@ const HomePage = () => {
         <div className="d-flex flex-column">
             <div className="home-wrap mb-5">
                 <div className="w-100 h-100 position-absolute d-flex overflow-hidden bg-black bg-opacity-50">
-                    <Container as={Col} lg={10} className="m-auto text-white">
+                    <Container as={Col} lg={9} md={10} xs={12} className="m-auto text-white">
                         <Row>
                             <Col md={12}>
                                 <h1 className="display-3 fw-bolder lh-1 text-center">Alquiler de veh&iacute;culos</h1>
                                 <h1 className="display-3 fw-bolder lh-1 text-center mb-4">Flexible para tu gusto</h1>
                                 <p className="fs-2 lh-sm text-center mb-5">
                                     Todo tipo de veh&iacute;culo, furgonetas, premium, vehículos.
-                                    Adaptado a tus necesidades y más,<br />busca el que necesitas y listo!
+                                    Adaptado a tus necesidades y más, busca el que necesitas y listo!
                                 </p>
                             </Col>
                             <Col lg={3} md={4} className="mb-3">
@@ -58,7 +58,7 @@ const HomePage = () => {
                                     onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
                                         editar({ ...entidad, marcaId: parseInt(evt.target.value) });
                                     }}>
-                                    <option value="">Seleccione</option>
+                                    <option value="">Todas</option>
                                     {marcas.map(item => <option key={item.id} value={item.id}>{item.nombre}</option>)}
                                 </Form.Select >
                             </Col>
@@ -69,7 +69,7 @@ const HomePage = () => {
                                     onChange={(evt: ChangeEvent<HTMLSelectElement>) => {
                                         editar({ ...entidad, modeloId: parseInt(evt.target.value) });
                                     }}>
-                                    <option value="">Seleccione</option>
+                                    <option value="">Todos</option>
                                     {
                                         modelos
                                             .filter(item => item.marca.id === entidad.marcaId)
@@ -86,7 +86,7 @@ const HomePage = () => {
                                     onChange={handleChangeInput} />
                             </Col>
                             <Col lg={3} md={4} className="align-self-end mb-3">
-                                <Button variant="primary" className="w-100" onClick={buscar}>Buscame un veh&iacute;culo</Button>
+                                <Button variant="primary" className="w-100 text-nowrap" onClick={buscar}>Buscame un veh&iacute;culo</Button>
                             </Col>
                         </Row>
                     </Container>

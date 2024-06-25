@@ -7,17 +7,16 @@ const UsuariosPage = () => {
     const { contextUsuarios: { nuevo } } = useData();
 
     return (
-        <Container className="">
-            <Row>
-                <Col md className="mb-3">
-                    <h3>Gesti&oacute;n de Usuarios</h3>
-                </Col>
-                <Col md="auto" className="mb-3">
-                    <Button variant="primary" className="rounded-pill" onClick={nuevo}>Nuevo</Button>
-                </Col>
-            </Row>
-            <UsuariosListado />
-            <UsuarioFormulario />
+        <Container className="py-4">
+            <Col lg={10} md={10} xs={12} className="mx-auto">
+                <Row>
+                    <Col md xs className="align-self-center mb-3">
+                        <h1 className="fs-2 fw-light m-0">Gesti&oacute;n de Usuarios</h1>
+                    </Col>
+                </Row>
+                <UsuariosListado />
+                <UsuarioFormulario />
+            </Col>
         </Container>
     )
 }
